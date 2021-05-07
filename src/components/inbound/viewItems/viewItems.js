@@ -74,6 +74,35 @@ export default function ViewItems({
                     width:95
                 }
             ]
+        if(type==='gr'){
+            return [
+                {
+                    Header:'#',
+                    accessor:'line_no',
+                    width:10
+                },
+                {
+                    Header:'Item Code',
+                    accessor:'itemcode'
+                },
+                {
+                    Header:'Quantity',
+                    accessor:'rcv_qty'
+                },
+                {
+                    Header:'Batch No',
+                    accessor:'batch_no'
+                },
+                {
+                    Header:'Expiry Date',
+                    accessor:'expiry_date'
+                },
+                {
+                    Header:'GRN No',
+                    accessor:'grn_no'
+                }
+            ]
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[type])
 
@@ -88,7 +117,6 @@ export default function ViewItems({
                             {/* <Typography variant='body1'>{refNo}</Typography> */}
                         </Grid>
                         <Grid item xs={12}>
-                            <TableToolbar handleFetch={()=>{}}/>
                             <Table
                                 columns={columns}
                                 data={items}
@@ -112,6 +140,6 @@ ViewItems.defaultProps = {
 }
 
 ViewItems.propTypes = {
-    type:PropTypes.oneOf(['po','trnho'])
+    type:PropTypes.oneOf(['po','trnho','gr'])
 }
 

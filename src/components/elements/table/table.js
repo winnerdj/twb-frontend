@@ -1,5 +1,6 @@
 import React from 'react';
-import {Table,
+import {Grid,
+    Table,
     TableBody,
     TableCell,
     TableContainer,
@@ -7,8 +8,11 @@ import {Table,
     TablePagination ,
     TableRow,
     TableSortLabel,
+    InputBase,
     makeStyles,
+    Typography,
 } from '@material-ui/core';
+import {Search} from '@material-ui/icons';
 import {
     useTable,
     useSortBy,
@@ -18,7 +22,7 @@ import {
     useGlobalFilter,
     useAsyncDebounce
 } from 'react-table';
-import {useSelector} from 'react-redux';
+// import {useSelector} from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
     resizer:{
@@ -29,11 +33,12 @@ const useStyles = makeStyles((theme) => ({
         position: 'absolute',
         right: 0,
         top: 0,
-        transform: 'translateX(50%)',
-        zIndex: 1
+        transform: 'translateX(50%)'
     },
     root:{
-        width: '100%'
+        width: '100%',
+        paddingLeft:'10px',
+        paddingRight:'10px'
     },
     container:{
         maxHeight:400,
@@ -50,6 +55,46 @@ const useStyles = makeStyles((theme) => ({
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis'
+    },
+    search: {
+        position: 'relative',
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: '#e0e0e0',
+        '&:hover': {
+          backgroundColor: '#eeeeee',
+        },
+        marginLeft: 0,
+        marginTop:theme.spacing(1),
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+          marginLeft: theme.spacing(1),
+          width: 'auto',
+        },
+      },
+      searchIcon: {
+        padding: theme.spacing(0, 2),
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      inputRoot: {
+        color: 'inherit',
+      },
+      inputInput: {
+        padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+          width: '12ch',
+          '&:focus': {
+            width: '20ch',
+          },
+        },
       }
 }))
 
@@ -59,7 +104,8 @@ export default function MaTable({
     size
 }) {    
     const classes = useStyles();
-    const {search} = useSelector(state => state.filters)
+    const [search,setSearch] = React.useState('');
+    // const {search} = useSelector(state => state.filters)
     const defaultColumn = React.useMemo(
         () => ({
           minWidth: 30,
@@ -110,81 +156,118 @@ export default function MaTable({
         setGlobalFilter(value || undefined)
     },200)
 
+    const handleChange = (e) => {
+        setSearch(e.target.value)
+    }
+
     React.useEffect(()=>{
         // const count = preGlobalFilteredRows.length;
-        onChange(search)
+        onChange(search);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[search])
 
     return (
-        <div className={classes.root}>
-            <TableContainer className={classes.container}>
-                <Table {...getTableProps()} size='small' stickyHeader>
-                    <TableHead >
-                    {headerGroups.map(headerGroup => (
-                        <TableRow className={classes.header} {...headerGroup.getHeaderGroupProps()}>
-                            {
-                                headerGroup.headers.map(column => (
-                                    <TableCell {...column.getHeaderProps()}>
-                                        <div {...column.getSortByToggleProps()}>   
-                                        {column.render('Header')}
-                                        <TableSortLabel
-                                            active={column.isSorted}
-                                            direction={column.isSortedDesc ? 'desc' : 'asc'}
-                                        />
-                                        </div>
-                                        <div 
-                                            {...column.getResizerProps()}
-                                            className={classes.resizer}
-                                            >
-                                        </div>
-                                    </TableCell>
-                                ))
-                            }
-                       
-                        </TableRow> 
-                    ))}
-                    </TableHead>
-                    <TableBody {...getTableBodyProps()}>
-                        {
-                            page.map((row,i) => {
-                                prepareRow(row)
-                                return(
-                                    <TableRow hover {...row.getRowProps()}>
+            <Grid container spacing={2}>    
+                <Grid container 
+                    item xs={12} 
+                    spacing={1}
+                    justify='space-between'>
+                    <Grid item>
+                        <div className={classes.search}>
+                            <div className={classes.searchIcon}>
+                                <Search />
+                            </div>
+                            <InputBase
+                                placeholder="Search…"
+                                onChange={handleChange}
+                                name='search'
+                                value={search}
+                                classes={{
+                                    root: classes.inputRoot,
+                                    input: classes.inputInput,
+                                }}
+                                inputProps={{ 'aria-label': 'search' }}
+                            />
+                        </div>
+                    </Grid>
+                    <Grid item>
+                        <Typography variant='overline'>
+                            Count: <strong>{data.length}</strong>
+                        </Typography>                     
+                    </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                    <div className={classes.root}>
+                        <TableContainer className={classes.container}>
+                        <Table {...getTableProps()} size='small' stickyHeader style={{transformStyle: 'preserve-3d'}}>
+                            <TableHead >
+                                {headerGroups.map(headerGroup => (
+                                    <TableRow className={classes.header} {...headerGroup.getHeaderGroupProps()}>
                                         {
-                                            row.cells.map(cell => (
-                                                <TableCell {...cell.getCellProps()}>
-                                                    <div className={classes.textContainer}>
-                                                        {cell.render('Cell')}
+                                            headerGroup.headers.map(column => (
+                                                <TableCell {...column.getHeaderProps()}>
+                                                    <div {...column.getSortByToggleProps()}>   
+                                                    {column.render('Header')}
+                                                    <TableSortLabel
+                                                        active={column.isSorted}
+                                                        direction={column.isSortedDesc ? 'desc' : 'asc'}
+                                                    />
+                                                    </div>
+                                                    <div 
+                                                        {...column.getResizerProps()}
+                                                        className={classes.resizer}
+                                                        >
                                                     </div>
                                                 </TableCell>
                                             ))
                                         }
-                                    </TableRow>
-                                )
-                            })
-                        }
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <TablePagination
-                component='div'
-                style={{ display:"flex" }}
-                rowsPerPageOptions={[
-                    20,
-                    50,
-                    { label: 'All', value: data.length },
-                ]}
-                colSpan={3}
-                count={data.length}
-                rowsPerPage={pageSize}
-                page={pageIndex}
-                SelectProps={{
-                    inputProps: { 'aria-label': 'rows per page' },
-                    native: true,
-                }}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}/>
-        </div>
+                                    </TableRow> 
+                                ))}
+                            </TableHead>
+                        <TableBody {...getTableBodyProps()}>
+                            {
+                                page.map((row,i) => {
+                                    prepareRow(row)
+                                    return(
+                                        <TableRow hover {...row.getRowProps()}>
+                                            {
+                                                row.cells.map(cell => (
+                                                    <TableCell {...cell.getCellProps()}>
+                                                        <div className={classes.textContainer}>
+                                                            {cell.render('Cell')}
+                                                        </div>
+                                                    </TableCell>
+                                                ))
+                                            }
+                                        </TableRow>
+                                    )
+                                })
+                            }
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <TablePagination
+                    component='div'
+                    style={{ display:"flex" }}
+                    rowsPerPageOptions={[
+                        20,
+                        50,
+                        { label: 'All', value: data.length },
+                    ]}
+                    colSpan={3}
+                    count={data.length}
+                    rowsPerPage={pageSize}
+                    page={pageIndex}
+                    SelectProps={{
+                        inputProps: { 'aria-label': 'rows per page' },
+                        native: true,
+                    }}
+                    onChangePage={handleChangePage}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}/>
+                    </div>
+                </Grid>
+            </Grid>
+       
     )
 }

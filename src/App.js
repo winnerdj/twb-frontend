@@ -26,6 +26,9 @@ const theme = createMuiTheme({
     }
   },
   palette:{
+    background:{
+      default:'#eeeeee'
+    }
     // primary:{
     //   main:'#FAFAFA'
     // },

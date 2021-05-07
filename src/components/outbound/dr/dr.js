@@ -2,11 +2,11 @@ import React from 'react';
 import {Paper,Grid, Button,Box} from '@material-ui/core';
 import {useSelector} from 'react-redux';
 import {Table,TableToolbar,Loader} from '../../elements';
-import {retrieve,retriveDetails,exportToODO} from '../saga';
+import {retrieve,retriveDetails,exportToExcel} from '../saga';
 import {toast} from 'react-toastify';
 import ViewItems from '../viewItems';
 
-export default function Outbound() {
+function DR() {
     const {select,fromDate,toDate,date,stc} = useSelector(state => state.filters)
     const [data,setData] = React.useState([]);
     const [isLoading,setLoading] = React.useState(false);
@@ -14,12 +14,12 @@ export default function Outbound() {
     const [selected,setSelected] = React.useState({
         items:[],
         refNo:''
-    })
+    });
 
     const columns = React.useMemo(()=>[
         {
             Header:'Reference No.',
-            accessor:'sa_no',
+            accessor:'dr_no',
             Cell:props => {
                 const handleOpen = () =>{
                     setLoading(true)
@@ -51,11 +51,11 @@ export default function Outbound() {
         },
         {
             Header:'Type',
-            accessor:'sa_type'
+            accessor:'type'
         },
         {
-            Header:'SA Date',
-            accessor:'sa_date'
+            Header:'DR Date',
+            accessor:'dr_date'
         },
         {
             Header:'Source Location',
@@ -66,12 +66,28 @@ export default function Outbound() {
             accessor:'destination'
         },
         {
-            Header:'Mode of Shipment',
-            accessor:'via'
+            Header:'No. of Cartons',
+            accessor:'cartons'
         },
         {
-            Header:'Valuation Amount',
-            accessor:'valuation'
+            Header:'Estimated Value',
+            accessor:'est_value'
+        },
+        {
+            Header:'CBM',
+            accessor:'cbm'
+        },
+        {
+            Header:'Actual Weight',
+            accessor:'actual_weight'
+        },
+        {
+            Header:'Volume Weigth',
+            accessor:'volume_weight'
+        },
+        {
+            Header:'Mode of Shipment',
+            accessor:'via'
         },
         {
             Header:'Details Count',
@@ -118,11 +134,10 @@ export default function Outbound() {
             return toast.error('STC and RDD are required')
         }
         setLoading(true);
-        exportToODO({
-            route:'sa',
-            refNo:'',
-            rdd:date,
-            stc:stc == null ? '' : stc.value 
+        exportToExcel({
+            route:'dr',
+            fromDate,
+            toDate
         })
         .then(result => {
             setLoading(false)   
@@ -139,10 +154,10 @@ export default function Outbound() {
 
     return (
         <div>
-        {isLoading ? <Loader/>: null}
+            {isLoading ? <Loader/>: null}
         <Paper elevation={0} component={Box} p={1}>
             <Grid container spacing={2}>
-                <TableToolbar handleFetch={handleFetch} handleExport={handleExport} showDateRange showSTC transferType='SA' showDateFilter isExportVisible/>
+                <TableToolbar handleFetch={handleFetch} handleExport={handleExport} showDateRange isExportVisible transferType='SA'/>
                 <Table 
                     columns={columns}
                     data={data}
@@ -151,6 +166,8 @@ export default function Outbound() {
             </Grid>
         </Paper>
         <ViewItems open={open} toggle={toggleDetails} {...selected}/>
-    </div>
-    )
+        </div>
+    );
 }
+
+export default DR;

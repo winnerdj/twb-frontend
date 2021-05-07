@@ -2,6 +2,7 @@ import React from 'react'
 import {makeStyles,Grid,Typography} from '@material-ui/core';
 import {Switch,Route,useParams,useLocation} from 'react-router-dom';
 import {routes} from '../../../helpers';
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -17,10 +18,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ShowComponent = () => {
-    
     let {link} = useParams();
     let location = useLocation();
     const classes = useStyles();
+    const [state,setState] = React.useState({
+        header:'',
+        subHeader:''
+    })
 
     const renderComponent = () => {
         return routes.filter(item => item.route === `/${link}`)
@@ -29,13 +33,22 @@ const ShowComponent = () => {
         })
     }
 
+    React.useEffect(()=>{
+        if(typeof location.state !== 'undefined'){
+            setState({
+                header:location.state.header,
+                subHeader:location.state.subHeader
+            })
+        }
+    },[location])
+
     return <div>
         <Grid item xs={12} className={classes.textIndent}>
             <Typography variant='h5' >
-                {location.state.header}
+                {state.header}
             </Typography>
             <Typography variant='body1' gutterBottom >
-                {location.state.subHeader}
+                {state.subHeader}
             </Typography>
         </Grid>
         {/* <Divider variant='middle'/> */}

@@ -81,5 +81,51 @@ export const exportToASN = ({
         console.log(e)
         throw e
     }
+}
 
+export const exportToExcel = ({
+    route,
+    fromDate,
+    toDate
+}) => {
+    try{
+        return API({
+            responseType:'blob',
+            contentType:'application/vnd.ms-excel'
+        })
+        .get(`/${baseURL}/${route}/excel`,{
+            params:{
+                fromDate,
+                toDate
+            }
+        })
+        .then(result => {
+            console.log(result.data)
+            return saveAs(result.data,`${route}_asn.xlsx`)
+        })
+    
+    }
+    catch(e){
+        console.log(e)
+        throw e
+    }
+    
+}
+
+export const updateStatus = ({
+    route,
+    no
+}) => {
+
+    try{
+        return API({
+            responseType:'json',
+            contentType:'application/json'
+        })
+        .put(`/${baseURL}/${route}/status/${no}`)
+        .then(result => result)
+    }
+    catch(e){
+        throw e
+    }
 }
