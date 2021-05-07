@@ -60,7 +60,9 @@ export const retriveDetails = ({
 export const exportToODO = ({
     route,
     type,
-    refNo
+    refNo,
+    rdd,
+    stc
 }) => {
     try{
         return API({
@@ -69,7 +71,38 @@ export const exportToODO = ({
         })
         .get(`/${baseURL}/${route}/odo/${refNo}`,{
             params:{
-                type
+                type,
+                refNo,
+                rdd,
+                stc
+            }
+        })
+        .then(result => {
+            console.log(result.data)
+            return saveAs(result.data,`${route}_odo.xlsx`)
+        })
+    }
+    catch(e){
+        console.log(e)
+        throw e
+    }
+
+}
+
+export const exportToExcel = ({
+    route,
+    fromDate,
+    toDate
+}) => {
+    try{
+        return API({
+            responseType:'blob',
+            contentType:'application/vnd.ms-excel'
+        })
+        .get(`/${baseURL}/${route}/excel`,{
+            params:{
+                fromDate,
+                toDate
             }
         })
         .then(result => {

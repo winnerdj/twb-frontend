@@ -51,28 +51,45 @@ export default function Sidebar({isOpen,toggle}) {
         temp[index] = selected
         setModules(temp);
     }
-    // console.log(moduleLists)
+
     return (
         <div>
-            <Drawer anchor='left'
-                open={isOpen}
-                onClose={toggle}
-                // classes={{ paper: classes.list}}
-               >
+            <Drawer anchor='left' open={isOpen} onClose={toggle}>
                 <div className={classes.root}>
                     <List>
                         {
                             modules.map((item,index) => {
                                 return <div key={index}>
-                                    <ListItem button onClick={() => toggleSubmodule(index)}>
-                                        <ListItemText 
-                                            disableTypography
-                                            primary={<Typography type="body2" color='primary'>{item.label}</Typography>}
-                                        />
-                                        <div className={classes.iconColor}>
-                                            {item.isCollapse ? <ExpandLess/> :<ExpandMore/>}
-                                        </div>
-                                    </ListItem>
+                                    {
+                                        item.subModules.length > 0 ? 
+                                        <ListItem button onClick={() => toggleSubmodule(index)}>
+                                            <ListItemText 
+                                                disableTypography
+                                                primary={<Typography type="body2" color='primary'>{item.label}</Typography>}
+                                            />
+                                            <div className={classes.iconColor}>
+                                                {item.isCollapse ? <ExpandLess/> :<ExpandMore/>}
+                                            </div>
+                                        </ListItem> : 
+                                        <ListItem button 
+                                            onClick={toggle}
+                                            component={NavLink}
+                                            selected = {location.pathname === item.route}
+                                            to={{
+                                                pathname:item.route,
+                                                    state:{
+                                                        header:item.label,
+                                                        subHeader:''
+                                                    }
+                                                }}
+                                            >
+                                            <ListItemText 
+                                                disableTypography
+                                                primary={<Typography type="body2" color='primary'>{item.label}</Typography>}
+                                            />
+                                        </ListItem>
+                                    }
+                                   
                                     <Collapse in={item.isCollapse} timeout="auto" unmountOnExit>
                                         {
                                             item.subModules.map((sub,i) => {

@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes  from 'prop-types';
-import {Toolbar,makeStyles,InputBase,Box,Grid,Button,TextField} from '@material-ui/core';
-import {Search,GetApp} from '@material-ui/icons';
+import {makeStyles,Box,Grid,Button,TextField} from '@material-ui/core';
+import {GetApp} from '@material-ui/icons';
 import {useSelector,useDispatch} from 'react-redux';
-import SelectType from '../select';
+import {SelectType,SelectSTC} from '../../elements';
+// import SelectType from '../select';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -58,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
           width: '20ch',
         },
       },
-    },
+    }
   }));
 
 export default function TableToolbar({
@@ -67,11 +68,12 @@ export default function TableToolbar({
   isExportVisible,
   showDateFilter,
   transferType,
-  showDateRange
+  showDateRange,
+  showSTC
 }) {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const {search,date,fromDate,toDate} = useSelector(state => state.filters);
+    const {date,fromDate,toDate} = useSelector(state => state.filters);
 
     const handleChange = (e) => {
       dispatch({
@@ -93,57 +95,12 @@ export default function TableToolbar({
     },[])
 
     return (
-        <div classes={classes.root}>
-        <Toolbar disableGutters={true} variant="dense">
-            <Grid container >
-                <Grid item>
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <Search />
-                        </div>
-                        <InputBase
-                          placeholder="Search…"
-                          onChange={handleChange}
-                          name='search'
-                          value={search}
-                          classes={{
-                              root: classes.inputRoot,
-                              input: classes.inputInput,
-                          }}
-                          inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </div>
-                </Grid>
-                <Grid item>
-                  <div style={{ width: '100%'}}>
-                  <Box display='flex'>
-                      <Box p={1}>
-                        <Button variant='contained' onClick={handleFetch}>Search</Button>
-                      </Box>
-                     { isExportVisible ?  <Box p={1}>
-                        <Button variant='contained' onClick={handleExport}>
-                            <GetApp/> EXPORT
-                          </Button> 
-                      </Box>  : null}
-                      { showDateFilter ?  <Box p={1}>
-                          <TextField
-                            type='date'
-                            name='date'
-                            label='Created Date'
-                            variant='outlined'
-                            size='small'
-                            value={date}
-                            onChange={handleChange}
-                            //onChange={handleChange.bind()}
-                            InputLabelProps={{
-                              shrink:true
-                            }}
-                          />
-                      </Box> : null}
-                      {
-                        showDateRange ? 
-                        <Box display='flex'>
-                          <Box p={1}>
+        <Grid container className={classes.root}>
+            <Grid item container xs={12}>
+                {
+                  showDateRange ?
+                  <Grid component={Box} display='flex' item>
+                     <Box p={1}>
                             <TextField
                                 type='date'
                                 name='fromDate'
@@ -156,34 +113,73 @@ export default function TableToolbar({
                                   shrink:true
                                 }}
                               />
-                          </Box>
-                          <Box p={1}>
+                      </Box>
+                      <Box p={1}>
                           <TextField
-                                type='date'
-                                name='toDate'
-                                label='To'
-                                variant='outlined'
-                                size='small'
-                                value={toDate}
-                                onChange={handleChange}
-                                InputLabelProps={{
-                                  shrink:true
-                                }}
-                              />
-                            </Box>  
-                        </Box>:null
-                      }
-                      {
-                        transferType !== '' ? <Box p={1}>
-                            <SelectType type={transferType}/>
-                        </Box>:null
-                      }
+                              type='date'
+                              name='toDate'
+                              label='To'
+                              variant='outlined'
+                              size='small'
+                              value={toDate}
+                              onChange={handleChange}
+                              InputLabelProps={{
+                                shrink:true
+                              }}
+                            />
+                        </Box>  
+                  </Grid> : null
+                }
+                {
+                  transferType !== '' ? <Grid item>
+                    <Box p={1}>
+                      <SelectType type={transferType}/>
                     </Box>
-                  </div>
+                  </Grid>:null
+                }
+                {
+                  showSTC ? <Grid item xs={2}>
+                    <Box p={1}>
+                      <SelectSTC/>
+                    </Box>
+                  </Grid> : null
+                }
+                {
+                  showDateFilter ? 
+                  <Grid item>
+                    <Box p={1}>
+                      <TextField
+                        type='date'
+                        name='date'
+                        label='Date'
+                        variant='outlined'
+                        size='small'
+                        value={date}
+                        onChange={handleChange}
+                        InputLabelProps={{
+                          shrink:true
+                        }}
+                      />
+                    </Box>
+                  </Grid>:null
+                }
+                { 
+                  isExportVisible?
+                  <Grid item>
+                    <Box p={1}>
+                        <Button variant='contained' onClick={handleExport}>
+                          <GetApp/> EXPORT
+                        </Button> 
+                    </Box>  
+                  </Grid> : null
+                }
+                <Grid item>
+                    <Box p={1}>
+                      <Button variant='contained' onClick={handleFetch}>Search</Button>
+                    </Box>
                 </Grid>
             </Grid>
-        </Toolbar>
-        </div>
+        </Grid>
     )
 }
 
@@ -195,8 +191,9 @@ TableToolbar.defaultProps = {
   transferType:'',
   search:'',
   date:'',
+  showSTC:false
 }
 
 TableToolbar.propTypes ={
-  type: PropTypes.oneOf(['PO','Type','SA'])
+  transferType: PropTypes.oneOf(['PO','Type','SA','DOC'])
 }

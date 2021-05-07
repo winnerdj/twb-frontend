@@ -5,7 +5,8 @@ export const filterReducer = (
         date:'',
         fromDate:'',
         toDate:'',
-        select:''
+        select:'',
+        stc:null
     },
     action
 ) => {
@@ -18,7 +19,12 @@ export const filterReducer = (
         case 'RESET_FILTER':
             return{
                 search:'',
-                date:''
+                date:'',
+                fromDate:'',
+                toDate:'',
+                select:'',
+                stc:null
+
             }
         default: return state
     }

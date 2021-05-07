@@ -25,14 +25,29 @@ function SelectTypes({type}) {
         else if(type==='Type'){
             setState([
                 'RFD',
-                'IRV'
+                'IRV',
+                'JO',
+                'CYC',
+                'GRNSA'
             ])
         }
         else if(type === 'SA'){
             setState([
                 'MFGSA',
                 'PWS',
-                'SA'
+                'SA',
+                'JO',
+                'RTS',
+                'CYC',
+                'DES'
+            ])
+        }
+        else if(type === 'DOC'){
+            setState([
+                'STKBALDMS',
+                'STKBALWMS',
+                'STKVARIANCE',
+                'W2W'
             ])
         }
 
@@ -54,8 +69,6 @@ function SelectTypes({type}) {
         })
     }       
 
-
-    
     return (
         <div>
             <FormControl variant='outlined' size='small' className={classes.root}>
@@ -85,7 +98,7 @@ SelectTypes.defaultProps = {
 }   
 
 SelectTypes.propTypes ={
-    type: PropTypes.oneOf(['PO','Type','SA'])
+    type: PropTypes.oneOf(['PO','Type','SA','DOC'])
 }
 
 export default SelectTypes

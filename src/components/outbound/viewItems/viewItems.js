@@ -6,7 +6,6 @@ import {Button,
     Grid,
     Typography,
     DialogActions} from '@material-ui/core';
-import PropTypes from 'prop-types';
 import {Table,TableToolbar} from '../../elements';
 
 export default function ViewItems({
@@ -53,7 +52,6 @@ export default function ViewItems({
                             {/* <Typography variant='body1'>{refNo}</Typography> */}
                         </Grid>
                         <Grid item xs={12}>
-                            <TableToolbar handleFetch={()=>{}}/>
                             <Table
                                 columns={columns}
                                 data={items}

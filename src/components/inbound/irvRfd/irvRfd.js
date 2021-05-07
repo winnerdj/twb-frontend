@@ -1,5 +1,5 @@
 import React from 'react';
-import {Paper,Grid, Button} from '@material-ui/core';
+import {Paper,Grid, Button,Box} from '@material-ui/core';
 import {useSelector} from 'react-redux';
 import {Table,TableToolbar,Loader} from '../../elements';
 import {retrieve,retriveDetails,exportToASN} from '../saga';
@@ -129,7 +129,7 @@ export default function IRVRFD() {
     return (
         <div>
             {isLoading ? <Loader/>: null}
-            <Paper elevation={0}>
+            <Paper elevation={0} component={Box} p={1}>
                 <Grid container spacing={2}>
                     <TableToolbar handleFetch={handleFetch} showDateRange transferType='Type'/>
                     <Table 

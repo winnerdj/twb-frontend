@@ -5,8 +5,10 @@ import CodeReference from '../components/dataManagement/codeReference/main';
 import RouteSchedule from '../components/dataManagement/routeSched/main';
 import ForwardShipment from '../components/dataManagement/forwardShipment/main';
 import {UserManagement} from '../components/administration';
-import {PO,IRVRFD} from '../components/inbound';
-import {Outbound} from '../components/outbound';
+import {PO,IRVRFD,GR} from '../components/inbound';
+import {Outbound,ShipmentConf,DR} from '../components/outbound';
+import {Inventory} from '../components/internal';
+import Triggers from '../components/triggers';
 
 const routes = [
     {
@@ -46,10 +48,30 @@ const routes = [
         component: index => <IRVRFD key={index}/>
     },
     {
+        route:'/goods-receipt',
+        component: index => <GR key={index}/>
+
+    },
+    {
         route:'/shipping-list',
         component:index => <Outbound key={index}/>
+    },
+    {
+        route:'/confirmed-shipments',
+        component:index => <ShipmentConf key={index}/>
+    },
+    {
+        route:'/dr',
+        component:index => <DR key={index}/>
+    },
+    {
+        route:'/inventory',
+        component:index => <Inventory key={index}/>
+    },
+    {
+        route:'/triggers',
+        component:index => <Triggers key={index}/>
     }
-
 ]
 
 export default routes;
