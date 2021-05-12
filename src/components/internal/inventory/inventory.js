@@ -11,13 +11,13 @@ import {
     retrieve
 } from '../saga';
 import {saveAs} from 'file-saver';
-import {toast} from 'react-toastify';
-import JSZip from 'jszip';
+import CreateModal from '../createModal';
 
 function Inventory(props) {
     const {select,fromDate,toDate} = useSelector(state => state.filters)
     const [data,setData] = React.useState([]);
     const [isLoading,setLoading] = useLoading();
+    const [modal,setModal] = React.useState(false);
 
     const columns = React.useMemo(()=>[
         {
@@ -37,26 +37,15 @@ function Inventory(props) {
             Header:'Zip File',
             accessor:'File_Content',
             Cell:props => {
-                // const str2bytes = (str) => {
-                //     var bytes = new Uint8Array(str.length);
-                //     for (var i=0; i<str.length; i++) {
-                //         bytes[i] = str.charCodeAt(i);
-                //     }
-                //     return bytes;
-                // }
-                
                 const download = () => {
-                    const buffer = Buffer.from(props.row.original.File_Content.data).toString('base64');
-                    const zip = new JSZip();
-                    console.log(buffer)
-                    // zip.loadAsync()
-                    // const blob = new Blob([str2bytes(buffer)],{
-                    //     type:"application/zip"
-                    // });
-
-                    // // console.log(buffer.length)
-                    // // console.log(blob.size)
-                    // saveAs(blob,props.row.original.Filename);
+                    try{
+                        const buffer = Buffer.from(props.row.original.File_Content.data)
+                        const blob = new Blob([buffer]);
+                        saveAs(blob,props.row.original.Filename)
+                    }
+                    catch(e){
+                        setLoading(false)  
+                    }
                 }
                 return <Button variant='contained' color='primary' onClick={download}>Download</Button>
             }
@@ -93,12 +82,19 @@ function Inventory(props) {
         })
     }
 
+    const toggle = () => {
+        setModal(!modal);       
+        if(modal){
+            handleFetch();
+        }
+    }
+
     return (
         <div>
             <Loaders isLoading={isLoading}/>
             <Paper elevation={0} component={Box} p={1}>
                 <Grid container spacing={2}>
-                    <TableToolbar handleFetch={handleFetch} showDateRange transferType='DOC'/>
+                    <TableToolbar handleFetch={handleFetch} handleCreate={toggle} showCreate showDateRange transferType='DOC'/>
                     <Table 
                         columns={columns}
                         data={data}
@@ -106,6 +102,7 @@ function Inventory(props) {
                     />
                 </Grid>
             </Paper>
+            <CreateModal open={modal} toggle={toggle}/>
         </div>
     );
 }

@@ -64,11 +64,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TableToolbar({
   handleFetch,
+  handleCreate,
   handleExport,
   isExportVisible,
   showDateFilter,
   transferType,
   showDateRange,
+  showCreate,
   showSTC
 }) {
     const classes = useStyles();
@@ -173,25 +175,44 @@ export default function TableToolbar({
                     </Box>  
                   </Grid> : null
                 }
+                {
+                  showCreate ? 
+                  <Grid item>
+                    <Box p={1}>
+                        <Button  variant='contained' color='primary' onClick={handleCreate}>
+                          Create
+                        </Button>
+                    </Box>
+                  </Grid> : null
+                } 
                 <Grid item>
                     <Box p={1}>
                       <Button variant='contained' onClick={handleFetch}>Search</Button>
                     </Box>
                 </Grid>
             </Grid>
+            {/* <Grid item container xs={12}>
+                <Grid item>
+                    <Box p={1}>
+                        <Button  variant='contained'>Create</Button>
+                    </Box>
+                </Grid>
+            </Grid> */}
         </Grid>
     )
 }
 
 TableToolbar.defaultProps = {
   handleExport: ()=>{},
+  handleCreate: ()=>{},
   isExportVisible:false,
   showDateFilter:false,
   showDateRange:false,
   transferType:'',
   search:'',
   date:'',
-  showSTC:false
+  showSTC:false,
+  showCreate:false
 }
 
 TableToolbar.propTypes ={

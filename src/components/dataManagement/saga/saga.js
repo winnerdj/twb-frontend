@@ -22,7 +22,6 @@ export const retrieve = ({route,date}) => {
         console.log(e)
         return []
     }
-   
 }
 
 export const exportToExcel = ({route,
@@ -30,6 +29,7 @@ export const exportToExcel = ({route,
     date
 }) => {
     try{
+        
         const apiService = API({
             responseType:'blob',
             contentType:'application/vnd.ms-excel'

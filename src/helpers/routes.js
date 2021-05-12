@@ -4,6 +4,7 @@ import Vendor from '../components/dataManagement/vendor/main';
 import CodeReference from '../components/dataManagement/codeReference/main';
 import RouteSchedule from '../components/dataManagement/routeSched/main';
 import ForwardShipment from '../components/dataManagement/forwardShipment/main';
+import ItemCoversion from '../components/dataManagement/itemConversion';
 import {UserManagement} from '../components/administration';
 import {PO,IRVRFD,GR} from '../components/inbound';
 import {Outbound,ShipmentConf,DR} from '../components/outbound';
@@ -14,6 +15,10 @@ const routes = [
     {
         route:'/item-master',
         component: index => <ItemMaster key={index}/>
+    },
+    {
+        route:'/item-conversion',
+        component: index => <ItemCoversion key={index}/>
     },
     {
         route:'/location',
