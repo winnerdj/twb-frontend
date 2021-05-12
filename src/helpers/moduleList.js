@@ -79,6 +79,11 @@ const moduleLists = [
                 link:'/item-master'
             },
             {
+                name:'itemConversion',
+                label: 'Item Conversion',
+                link:'/item-conversion'
+            },
+            {
                 name:'location',
                 label:'Locations',
                 link:'/location'

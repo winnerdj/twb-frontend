@@ -7,12 +7,14 @@ const useStyles = makeStyles(theme => ({
     root:{
         minWidth: 120,
     }
-}))
+}));
+
 function SelectTypes({type}) {
     const [state,setState] = React.useState([]);
     const {select} = useSelector(state => state.filters)
     const dispatch = useDispatch();
     const classes = useStyles();
+    
     React.useEffect(()=>{
         if(type==='PO'){
             setState([
@@ -85,7 +87,6 @@ function SelectTypes({type}) {
                     {state.map(types => (
                         <MenuItem key={types} value={types}>{types}</MenuItem>
                     ))}
-                
                 </Select>
             </FormControl>
         </div>

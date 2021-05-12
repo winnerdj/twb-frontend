@@ -7,7 +7,7 @@ import {Button,
     Typography,
     DialogActions} from '@material-ui/core';
 import PropTypes from 'prop-types';
-import {Table,TableToolbar} from '../../elements';
+import {Table} from '../../elements';
 
 export default function ViewItems({
     open,
