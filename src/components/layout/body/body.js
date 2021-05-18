@@ -29,6 +29,7 @@ export default function Body() {
 
 
     React.useEffect(()=>{
+        console.log(process.env.REACT_APP_API_URL)
 
         if(location.pathname !== '/' && typeof location.state === 'undefined'){
             let list = []

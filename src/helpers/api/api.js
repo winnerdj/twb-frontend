@@ -7,13 +7,12 @@ const API = ({
     responseType,
     contentType
 }) => {
-    console.log(process.env.API_URL)
     let headers = {
         'Content-Type': contentType
     }
 
     return axios.create({
-        baseURL:URL,
+        // baseURL:URL,
         timeout:0,
         maxRedirects: 5,
         responseType:responseType,
