@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const URL = 'http://localhost:16000';
+const URL = process.env.REACT_APP_API
 
 const API = ({
     responseType,
@@ -12,7 +12,7 @@ const API = ({
     }
 
     return axios.create({
-        // baseURL:URL,
+        baseURL:URL,
         timeout:0,
         maxRedirects: 5,
         responseType:responseType,
