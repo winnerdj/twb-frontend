@@ -29,6 +29,7 @@ export default function Body() {
 
 
     React.useEffect(()=>{
+        console.log(process.env.NODE_ENV)
         if(location.pathname !== '/' && typeof location.state === 'undefined'){
             let list = []
             // eslint-disable-next-line array-callback-return
