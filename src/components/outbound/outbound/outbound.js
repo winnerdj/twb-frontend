@@ -54,6 +54,10 @@ export default function Outbound() {
             accessor:'sa_type'
         },
         {
+            Header:'isConsolidated',
+            accessor:'isconsolidated'
+        },
+        {
             Header:'SA Date',
             accessor:'sa_date'
         },
@@ -121,7 +125,6 @@ export default function Outbound() {
         exportToODO({
             route:'sa',
             refNo:'',
-            rdd:date,
             stc:stc == null ? '' : stc.value 
         })
         .then(result => {
@@ -129,9 +132,23 @@ export default function Outbound() {
         })
         .catch(e => {
             console.log(e)
-            // if(typeof e.response !== 'undefined'){
-            //     toast.error(`${e.response.data.message}`)
-            // }
+            if (e.response && e.response.data) {
+                const {data} = e.response;
+                const file =  new FileReader();
+                new Promise((res,rej) => {
+                    file.onerror = () => {
+                        file.abort();
+                        rej(new Error('Problem parsing file'));
+                    }
+                    file.onload = () => {
+                        res(file.result)
+                    }
+                    file.readAsText(data)
+                }).then(data => {
+                    const {message} = JSON.parse(data)
+                    toast.error(message);
+                })
+            }
             setLoading(false) 
         })
 
@@ -142,7 +159,13 @@ export default function Outbound() {
         {isLoading ? <Loader/>: null}
         <Paper elevation={0} component={Box} p={1}>
             <Grid container spacing={2}>
-                <TableToolbar handleFetch={handleFetch} handleExport={handleExport} showDateRange showSTC transferType='SA' showDateFilter isExportVisible/>
+                <TableToolbar 
+                    handleFetch={handleFetch} 
+                    handleExport={handleExport} 
+                    showDateRange 
+                    showSTC 
+                    transferType='SA' 
+                    isExportVisible/>
                 <Table 
                     columns={columns}
                     data={data}
