@@ -1,53 +1,26 @@
 import React from 'react';
-import {Paper,Grid, Button,Box} from '@material-ui/core';
+import {Paper,Grid,Box} from '@material-ui/core';
 import {useSelector} from 'react-redux';
 import {Table,TableToolbar,Loader} from '../../elements';
-import {retrieve,retriveDetails,exportToExcel} from '../saga';
+import {retrieve,exportToExcel} from '../saga';
 import {toast} from 'react-toastify';
-import ViewItems from '../viewItems';
+// import ViewItems from '../viewItems';
 
 function DR() {
     const {select,fromDate,toDate,date,stc} = useSelector(state => state.filters)
     const [data,setData] = React.useState([]);
     const [isLoading,setLoading] = React.useState(false);
-    const [open,setOpen] = React.useState(false);
-    const [selected,setSelected] = React.useState({
-        items:[],
-        refNo:''
-    });
+    // const [open,setOpen] = React.useState(false);
+    // const [selected,setSelected] = React.useState({
+    //     items:[],
+    //     refNo:''
+    // });
 
     const columns = React.useMemo(()=>[
         {
             Header:'Reference No.',
             accessor:'dr_no',
-            Cell:props => {
-                const handleOpen = () =>{
-                    setLoading(true)
-                    retriveDetails({
-                        route:'sa',
-                        refNo:props.row.original.sa_no,
-                        type:props.row.original.sa_type
-                    })
-                    .then(result => {
-                        if(result.status === 200){
-                            setSelected({
-                                ...selected,
-                                items:result.data,
-                                refNo:props.row.original.sa_no
-                            })
-                            toggleDetails()
-                            setLoading(false)
-                        }
-                    })
-                    .catch(e => {
-                        console.log(e)
-                        setLoading(false)
-                    })
-
-                  
-                }
-                return <Button onClick={handleOpen} size='small'>{props.row.original.sa_no}</Button>
-            }
+            width:200
         },
         {
             Header:'Type',
@@ -105,14 +78,14 @@ function DR() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [])
 
-    const toggleDetails = () =>  {
-        setOpen(!open)
-    }
+    // const toggleDetails = () =>  {
+    //     setOpen(!open)
+    // }
 
     const handleFetch = () => {
         setLoading(true)
         retrieve({
-            route:'sa',
+            route:'dr',
             type:select,
             fromDate,
             toDate
@@ -165,7 +138,7 @@ function DR() {
                 />
             </Grid>
         </Paper>
-        <ViewItems open={open} toggle={toggleDetails} {...selected}/>
+        {/* <ViewItems open={open} toggle={toggleDetails} {...selected}/> */}
         </div>
     );
 }

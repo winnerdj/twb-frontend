@@ -1,13 +1,20 @@
 import axios from 'axios';
 
 
-const URL = 'http://localhost:16000';
+// const URL = process.env.REACT_APP_API
+let URL;
+
+if(process.env.NODE_ENV === 'development'){
+    URL = process.env.REACT_APP_DEV_API
+}
+else {
+    URL = process.env.REACT_APP_PROD_API
+}
 
 const API = ({
     responseType,
     contentType
 }) => {
-    console.log(process.env.API_URL)
     let headers = {
         'Content-Type': contentType
     }

@@ -61,7 +61,6 @@ export const exportToODO = ({
     route,
     type,
     refNo,
-    rdd,
     stc
 }) => {
     try{
@@ -69,11 +68,10 @@ export const exportToODO = ({
             responseType:'blob',
             contentType:'application/vnd.ms-excel'
         })
-        .get(`/${baseURL}/${route}/odo/${refNo}`,{
+        .post(`/${baseURL}/${route}/odo`,null,{
             params:{
                 type,
                 refNo,
-                rdd,
                 stc
             }
         })
