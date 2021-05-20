@@ -30,7 +30,8 @@ function SelectTypes({type}) {
                 'IRV',
                 'JO',
                 'CYC',
-                'GRNSA'
+                'GRNSA',
+                'PO'
             ])
         }
         else if(type === 'SA'){
