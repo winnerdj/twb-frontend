@@ -7,7 +7,7 @@ import {toast} from 'react-toastify';
 import ViewItems from '../viewItems';
 
 export default function Outbound() {
-    const {select,fromDate,toDate,date,stc} = useSelector(state => state.filters)
+    const {select,fromDate,toDate,stc} = useSelector(state => state.filters)
     const [data,setData] = React.useState([]);
     const [isLoading,setLoading] = React.useState(false);
     const [open,setOpen] = React.useState(false);
@@ -117,9 +117,9 @@ export default function Outbound() {
     }
 
     const handleExport = () => {
-        if(stc == null || date === ''){
+        if(stc == null){
             setLoading(false) 
-            return toast.error('STC and RDD are required')
+            return toast.error('STC  are required')
         }
         setLoading(true);
         exportToODO({
