@@ -1,12 +1,12 @@
 import React from 'react';
 import {Grid,Box,TextField,Button,Typography} from '@material-ui/core';
 import {Loader,useLoading} from '../elements/loader-component';
-import {trigger} from './saga';
 import {toast} from 'react-toastify';
 
 const DateFilter = ({
     label,
-    type
+    type,
+    trigger
 }) => {
     const [isLoading,setLoading] = useLoading();
     const [state,setState] = React.useState({
@@ -23,21 +23,35 @@ const DateFilter = ({
     
     const handleConfirm = () => {
         setLoading(true)
-        trigger({
-            route:type,
-            from:state.from,
-            to:state.to
-        }).then(result => {
+        trigger(state.from,state.to,type)
+        .then(() => {
             setLoading(false)
-            // if(result.status === 200){
-            //     setLoading(false)
-            // }
+            toast.success('Success')
         })
         .catch(e => {
-            console.log(e.response.data.message)
-            toast.error(`${e.response.data.message}`)
+            if(e.response && e.response.data){
+                toast.error(`${e.response.data.message}`)
+            }
             setLoading(false)
         })
+        // .then(result => {
+        //     setLoading(false)
+        // })
+        // trigger({
+        //     route:type,
+        //     from:state.from,
+        //     to:state.to
+        // }).then(result => {
+        //     setLoading(false)
+        //     // if(result.status === 200){
+        //     //     setLoading(false)
+        //     // }
+        // })
+        // .catch(e => {
+        //     console.log(e.response.data.message)
+        //     toast.error(`${e.response.data.message}`)
+        //     setLoading(false)
+        // })
     }
     return (
         <Grid item container >
