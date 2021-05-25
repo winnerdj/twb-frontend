@@ -7,7 +7,6 @@ import {useSelector} from 'react-redux';
 const Triggers = () => {
     const {id} = useSelector(state => state.user)
     const handleTrigger = (from,to,route) => {
-        console.log(from,to,route)
         return trigger({
             from,
             to,
@@ -19,16 +18,19 @@ const Triggers = () => {
     return (
         <div>
             <Paper elevation={0} component={Box} p={1}>
-                <DateFilter trigger={handleTrigger} type='gr' label='Goods Receipt Manual Trigger'/>
+                <DateFilter trigger={handleTrigger} type='gr' label='GRN Confirmation Manual Trigger'/>
             </Paper>
             <Paper elevation={0} component={Box} p={1}>
-                <DateFilter trigger={handleTrigger} type='sa' label='SA Manual Trigger'/>
+                <DateFilter trigger={handleTrigger} type='sa' label='Shipment Confirmation Manual Trigger'/>
             </Paper>
             <Paper elevation={0} component={Box} p={1}>
-                <DateFilter trigger={handleTrigger} type='isConsolidated' label='SA Update Manual Trigger'/>
+                <DateFilter trigger={handleTrigger} type='isConsolidated' label='SA Status Update Manual Trigger'/>
             </Paper>
             <Paper elevation={0} component={Box} p={1}>
                 <DateFilter trigger={handleTrigger} type='dr' label='DR Manual Trigger'/>
+            </Paper>
+            <Paper elevation={0} component={Box} p={1}>
+                <DateFilter trigger={handleTrigger} type='loctran' label='Location Transfer Manual Trigger'/>
             </Paper>
         </div>
     );
