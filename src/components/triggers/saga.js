@@ -15,8 +15,6 @@ export const trigger = ({
                 from,
                 to
             }
-        }).then(result => {
-            return result
         })
     }
     catch(e){

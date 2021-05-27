@@ -6,7 +6,7 @@ import {Button,
     Grid,
     Typography,
     DialogActions} from '@material-ui/core';
-import {Table,TableToolbar} from '../../elements';
+import {Table} from '../../elements';
 
 export default function ViewItems({
     open,
