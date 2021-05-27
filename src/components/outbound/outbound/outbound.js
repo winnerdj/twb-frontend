@@ -1,16 +1,18 @@
 import React from 'react';
 import {Paper,Grid, Button,Box} from '@material-ui/core';
 import {useSelector} from 'react-redux';
-import {Table,TableToolbar,Loader} from '../../elements';
+import {Table,TableToolbar,Loaders,useLoading} from '../../elements';
 import {retrieve,retriveDetails,exportToODO} from '../saga';
 import {toast} from 'react-toastify';
 import ViewItems from '../viewItems';
+import ExportModal from './exportModal';
 
 export default function Outbound() {
-    const {select,fromDate,toDate,stc} = useSelector(state => state.filters)
+    const {select,fromDate,toDate,stc,region} = useSelector(state => state.filters)
     const [data,setData] = React.useState([]);
-    const [isLoading,setLoading] = React.useState(false);
+    const [isLoading,setLoading] = useLoading(false);
     const [open,setOpen] = React.useState(false);
+    const [modal,setModal] = React.useState(false);
     const [selected,setSelected] = React.useState({
         items:[],
         refNo:''
@@ -116,19 +118,16 @@ export default function Outbound() {
         })
     }
 
-    const handleExport = () => {
-        if(stc == null){
-            setLoading(false) 
-            return toast.error('STC  are required')
-        }
-        setLoading(true);
+    const handleExport = (loader) => {
+        loader(true);
         exportToODO({
             route:'sa',
             refNo:'',
-            stc:stc == null ? '' : stc.value 
+            stc:stc == null ? '' : stc.value,
+            region:region == null ? '' : region.value
         })
         .then(result => {
-            setLoading(false)   
+            loader(false)   
         })
         .catch(e => {
             console.log(e)
@@ -149,23 +148,28 @@ export default function Outbound() {
                     toast.error(message);
                 })
             }
-            setLoading(false) 
+            loader(false) 
         })
 
     }
 
+    const toggle = () => {
+        setModal(!modal)
+    }
+
     return (
         <div>
-        {isLoading ? <Loader/>: null}
+        <Loaders isLoading={isLoading}/>
         <Paper elevation={0} component={Box} p={1}>
             <Grid container spacing={2}>
                 <TableToolbar 
                     handleFetch={handleFetch} 
-                    handleExport={handleExport} 
+                    handleExport={toggle} 
                     showDateRange 
                     showSTC 
                     transferType='SA' 
-                    isExportVisible/>
+                    isExportVisible
+                    />
                 <Table 
                     columns={columns}
                     data={data}
@@ -174,6 +178,7 @@ export default function Outbound() {
             </Grid>
         </Paper>
         <ViewItems open={open} toggle={toggleDetails} {...selected}/>
+        <ExportModal isOpen={modal} toggle={toggle} handleExport={handleExport}/>
     </div>
     )
 }

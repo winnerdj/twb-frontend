@@ -6,6 +6,7 @@ export const filterReducer = (
         fromDate:'',
         toDate:'',
         select:'',
+        region:null,
         stc:null
     },
     action
@@ -23,6 +24,7 @@ export const filterReducer = (
                 fromDate:'',
                 toDate:'',
                 select:'',
+                region:null,
                 stc:null
 
             }

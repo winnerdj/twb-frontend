@@ -9,7 +9,7 @@ import {Button,
     makeStyles,
     DialogActions
 } from '@material-ui/core';
-import {SelectSTC} from '../../elements'
+import {SelectSTC,Loaders,useLoading} from '../../elements'
 
 const useStyles = makeStyles((theme) => ({
     dialogPaper:{
@@ -25,9 +25,11 @@ function ExportModal({
 }) {
 
     const classes = useStyles();
+    const [isLoading,setLoading] = useLoading();
 
     return (
         <Dialog classes={{paper:classes.dialogPaper}}open={isOpen} fullWidth maxWidth='md'>
+            <Loaders isLoading={isLoading}/>
             <DialogTitle>Export to ODO Ramco Template</DialogTitle>
             <DialogContent dividers>
                 <Grid container spacing={2}>
@@ -42,7 +44,7 @@ function ExportModal({
                         />
                     </Grid>
                     <Grid item xs={4}>
-                        <Button variant='contained' color='primary' onClick={handleExport}>Export</Button>
+                        <Button variant='contained' color='primary' onClick={() => handleExport(setLoading)}>Export</Button>
                     </Grid>
                 </Grid>
             </DialogContent>

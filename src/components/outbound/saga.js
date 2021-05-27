@@ -61,7 +61,8 @@ export const exportToODO = ({
     route,
     type,
     refNo,
-    stc
+    stc,
+    region  
 }) => {
     try{
         return API({
@@ -72,7 +73,8 @@ export const exportToODO = ({
             params:{
                 type,
                 refNo,
-                stc
+                stc,
+                region
             }
         })
         .then(result => {
