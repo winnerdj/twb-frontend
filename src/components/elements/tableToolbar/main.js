@@ -208,7 +208,7 @@ TableToolbar.defaultProps = {
   isExportVisible:false,
   showDateFilter:false,
   showDateRange:false,
-  transferType:'',
+  transferType:'PO',
   search:'',
   date:'',
   showSTC:false,

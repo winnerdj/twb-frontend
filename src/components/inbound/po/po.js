@@ -2,7 +2,7 @@ import React from 'react';
 import {Paper,Grid, Button,Box} from '@material-ui/core';
 import {useSelector} from 'react-redux';
 import {Table,TableToolbar,Loader} from '../../elements';
-import {retrieve,retriveDetails,exportToASN} from '../saga';
+import {retrieve,retriveDetails,exportToASN,exportToExcel} from '../saga';
 import ViewItems from '../viewItems';
 
 
@@ -92,7 +92,8 @@ export default function PurchaseOrder() {
                     exportToASN({
                         route:'po',
                         refNo:props.row.original.po_no,
-                        type:props.row.original.po_type
+                        type:props.row.original.po_type,
+                        fileName:props.row.original.po_no
                     })
                     .then(() => {
                         setLoading(false)
@@ -132,12 +133,27 @@ export default function PurchaseOrder() {
         })
     }
 
+    const handleExport = () => {
+        setLoading(true);
+        exportToExcel({
+            route:'po',
+            fromDate,
+            toDate
+        })
+        .then(() => {
+            setLoading(false)
+        })
+        .catch(e => {
+            setLoading(false)
+        })
+    }   
+
     return (
         <div>
             {isLoading ? <Loader/>: null}
             <Paper elevation={0} component={Box} p={1}>
                 <Grid container spacing={2}>
-                    <TableToolbar transferType='PO' handleFetch={handleFetch} showDateRange/>
+                    <TableToolbar transferType='PO' handleFetch={handleFetch} handleExport={handleExport} showDateRange isExportVisible/>
                     <Table 
                         columns={columns}
                         data={data}

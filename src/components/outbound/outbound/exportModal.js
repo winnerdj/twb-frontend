@@ -33,9 +33,14 @@ function ExportModal({
             <DialogTitle>Export to ODO Ramco Template</DialogTitle>
             <DialogContent dividers>
                 <Grid container spacing={2}>
-                    <Grid item xs={4}>
+                    <Grid item xs={3}>
                         <SelectSTC
                             type='region'
+                        />
+                    </Grid>
+                    <Grid item xs={3}>
+                        <SelectSTC
+                            type='via'
                         />
                     </Grid>
                     <Grid item xs={4}>
@@ -43,7 +48,7 @@ function ExportModal({
                             type='location'
                         />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={2}>
                         <Button variant='contained' color='primary' onClick={() => handleExport(setLoading)}>Export</Button>
                     </Grid>
                 </Grid>

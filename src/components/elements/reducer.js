@@ -7,7 +7,8 @@ export const filterReducer = (
         toDate:'',
         select:'',
         region:null,
-        stc:null
+        stc:null,
+        via:null
     },
     action
 ) => {
@@ -25,8 +26,8 @@ export const filterReducer = (
                 toDate:'',
                 select:'',
                 region:null,
-                stc:null
-
+                stc:null,
+                via:null
             }
         default: return state
     }

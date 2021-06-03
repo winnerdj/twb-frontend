@@ -98,22 +98,61 @@ const useStyles = makeStyles((theme) => ({
       }
 }))
 
+const EditableCell = ({
+    value: initialValue,
+    row:{index,original},
+    column:{id},
+    updateMyData, // This is a custom function that we supplied to our table instance
+  }) => {
+     // We need to keep and update the state of the cell normally
+    const [value, setValue] = React.useState(initialValue)
+    let isEdit = original.isEdit;
+    const onChange = e => {
+      setValue(e.target.value)
+    }
+
+    const onBlur = () => {
+        updateMyData(index,id,value)
+    }
+
+    // If the initialValue is changed external, sync it up with our state
+    React.useEffect(() => {
+      setValue(initialValue)
+    }, [initialValue])
+  
+    if(id === 'doc_no'){
+        return (
+            <div>
+                {isEdit ?
+                    <input style={{width:'120px'}} value={value === null ? '' : value} onChange={onChange} onBlur={onBlur}/> : 
+                    initialValue
+                }
+            </div>
+        )
+    }
+    else{
+        return (
+            <div>{initialValue}</div>
+        )
+    }
+}
+
 export default function MaTable({
     columns,
     data,
-    size
+    size,
+    updateMyData,
+    skipPageReset
 }) {    
     const classes = useStyles();
     const [search,setSearch] = React.useState('');
-    // const {search} = useSelector(state => state.filters)
-    const defaultColumn = React.useMemo(
-        () => ({
-          minWidth: 30,
-          width: 150,
-          maxWidth: 400,
-        }),
-        []
-      )
+ 
+    const defaultColumn = {
+        minWidth: 30,
+        width: 150,
+        maxWidth: 400,
+        Cell:EditableCell
+    }
 
     const {
         getTableProps,
@@ -126,7 +165,6 @@ export default function MaTable({
         state:{
             pageIndex,pageSize
         },
-        // preGlobalFilteredRows,
         setGlobalFilter
     } = useTable({
             columns,
@@ -136,6 +174,8 @@ export default function MaTable({
                 pageSize:size,
                 pageIndex:0
             },
+            updateMyData,
+            autoResetPage: !skipPageReset
         },
         useGlobalFilter,
         useSortBy,
@@ -161,9 +201,7 @@ export default function MaTable({
     }
 
     React.useEffect(()=>{
-        // const count = preGlobalFilteredRows.length;
         onChange(search);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[search])
 
@@ -251,9 +289,9 @@ export default function MaTable({
                     component='div'
                     style={{ display:"flex" }}
                     rowsPerPageOptions={[
-                        20,
-                        50,
-                        { label: 'All', value: data.length },
+                        {label:20, value: 20},
+                        {label:50, value: 50},
+                        {label:100, value: 100}
                     ]}
                     colSpan={3}
                     count={data.length}
@@ -267,7 +305,12 @@ export default function MaTable({
                     onChangeRowsPerPage={handleChangeRowsPerPage}/>
                     </div>
                 </Grid>
-            </Grid>
-       
+            </Grid>  
     )
+}
+
+
+MaTable.defaultProps = {
+    updateMyData:()=>{},
+    skipPageReset:false
 }

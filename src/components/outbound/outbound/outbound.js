@@ -8,7 +8,7 @@ import ViewItems from '../viewItems';
 import ExportModal from './exportModal';
 
 export default function Outbound() {
-    const {select,fromDate,toDate,stc,region} = useSelector(state => state.filters)
+    const {select,fromDate,toDate,stc,region,via} = useSelector(state => state.filters)
     const [data,setData] = React.useState([]);
     const [isLoading,setLoading] = useLoading(false);
     const [open,setOpen] = React.useState(false);
@@ -123,6 +123,7 @@ export default function Outbound() {
         exportToODO({
             route:'sa',
             refNo:'',
+            via: via === null ? '': via.value,
             stc:stc == null ? '' : stc.value,
             region:region == null ? '' : region.value
         })
