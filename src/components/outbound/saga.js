@@ -1,5 +1,7 @@
 import API from '../../helpers/api';
 import {saveAs} from 'file-saver';
+import moment from 'moment';
+
 const baseURL = 'outbound';
 
 export const retrieve = ({
@@ -62,6 +64,7 @@ export const exportToODO = ({
     type,
     refNo,
     stc,
+    via,
     region  
 }) => {
     try{
@@ -74,12 +77,12 @@ export const exportToODO = ({
                 type,
                 refNo,
                 stc,
+                via,
                 region
             }
         })
         .then(result => {
-            console.log(result.data)
-            return saveAs(result.data,`${route}_odo.xlsx`)
+            saveAs(result.data,`ODO_${moment().format('YYYYMMDD').toString()}.xlsx`)
         })
     }
     catch(e){
@@ -99,7 +102,7 @@ export const exportToExcel = ({
             responseType:'blob',
             contentType:'application/vnd.ms-excel'
         })
-        .get(`/${baseURL}/${route}/excel`,{
+        .post(`/${baseURL}/${route}/excel`,{
             params:{
                 fromDate,
                 toDate

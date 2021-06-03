@@ -1,6 +1,9 @@
 import API from '../../helpers/api';
 import {saveAs} from 'file-saver';
+import moment from 'moment';
+
 const baseURL = 'inbound';
+const date = moment();
 
 export const retrieve = ({
     route,
@@ -60,7 +63,8 @@ export const retriveDetails = ({
 export const exportToASN = ({
     route,
     type,
-    refNo
+    refNo,
+    fileName
 }) => {
     try{
         return API({
@@ -73,8 +77,7 @@ export const exportToASN = ({
             }
         })
         .then(result => {
-            console.log(result.data)
-            return saveAs(result.data,`${route}_asn.xlsx`)
+            return saveAs(result.data,`ASN_${fileName}_${date.format('YYYYMMDD').toString()}.xlsx`)
         })
     }
     catch(e){
@@ -93,15 +96,14 @@ export const exportToExcel = ({
             responseType:'blob',
             contentType:'application/vnd.ms-excel'
         })
-        .get(`/${baseURL}/${route}/excel`,{
+        .post(`/${baseURL}/${route}/excel`,null,{
             params:{
                 fromDate,
                 toDate
             }
         })
         .then(result => {
-            console.log(result.data)
-            return saveAs(result.data,`${route}_asn.xlsx`)
+            return saveAs(result.data,`${route}.xlsx`)
         })
     
     }
@@ -124,6 +126,29 @@ export const updateStatus = ({
         })
         .put(`/${baseURL}/${route}/status/${no}`)
         .then(result => result)
+    }
+    catch(e){
+        throw e
+    }
+}
+
+export const createGRE = ({
+    route,
+    grnNo,
+    drNo,
+    user
+}) => {
+    try{
+        return API({
+            responseType:'json',
+            contentType:'application/json'
+        })
+        .put(`/${baseURL}/${route}/${grnNo}/`,null,{
+            params:{
+                drNo,
+                user
+            }
+        })
     }
     catch(e){
         throw e

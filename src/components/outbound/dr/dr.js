@@ -102,10 +102,6 @@ function DR() {
     }
 
     const handleExport = () => {
-        if(stc == null || date === ''){
-            setLoading(false) 
-            return toast.error('STC and RDD are required')
-        }
         setLoading(true);
         exportToExcel({
             route:'dr',
@@ -117,12 +113,8 @@ function DR() {
         })
         .catch(e => {
             console.log(e)
-            // if(typeof e.response !== 'undefined'){
-            //     toast.error(`${e.response.data.message}`)
-            // }
             setLoading(false) 
         })
-
     }
 
     return (

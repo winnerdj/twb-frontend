@@ -2,7 +2,7 @@ import React from 'react';
 import {Paper,Grid, Button,Box} from '@material-ui/core';
 import {useSelector} from 'react-redux';
 import {Table,TableToolbar,Loader} from '../../elements';
-import {retrieve,retriveDetails,exportToASN} from '../saga';
+import {retrieve,retriveDetails,exportToASN,exportToExcel} from '../saga';
 import ViewItems from '../viewItems';
 
 export default function IRVRFD() {
@@ -125,13 +125,28 @@ export default function IRVRFD() {
         })
     }
 
+    const handleExport = () => {
+        setLoading(true);
+        exportToExcel({
+            route:'trnho',
+            fromDate,
+            toDate
+        })
+        .then(() => {
+            setLoading(false)
+        })
+        .catch(e => {
+            setLoading(false)
+        })
+    }   
+
 
     return (
         <div>
             {isLoading ? <Loader/>: null}
             <Paper elevation={0} component={Box} p={1}>
                 <Grid container spacing={2}>
-                    <TableToolbar handleFetch={handleFetch} showDateRange transferType='Type'/>
+                    <TableToolbar handleFetch={handleFetch} handleExport={handleExport} showDateRange isExportVisible transferType='Type'/>
                     <Table 
                         columns={columns}
                         data={data}
