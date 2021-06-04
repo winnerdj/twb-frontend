@@ -154,3 +154,24 @@ export const createGRE = ({
         throw e
     }
 }
+
+export const report = ({
+    route,
+    report
+}) => {
+    try{
+        return API({
+            responseType:'blob',
+            contentType:'application/vnd.ms-excel'
+        })
+        .get(`/${baseURL}/${route}/${report}`)
+        .then(result => {
+            return saveAs(result.data,`balance_sheet_report.xlsx`)
+        })
+    
+        
+    }
+    catch(e){
+        throw e
+    }
+}

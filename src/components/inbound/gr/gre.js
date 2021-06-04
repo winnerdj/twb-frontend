@@ -37,7 +37,6 @@ function GRE(props) {
                 }
 
                 const handleSave = () => {
-                    // console.log(props.row.original.grn_no)
                     setLoading(true)
                     createGRE({
                         route:'gre',
@@ -46,8 +45,19 @@ function GRE(props) {
                         user:id
                     })
                     .then(result => {
+                        const grnNo = props.row.original.grn_no;
+                        const newData = data.filter(item => {
+                            return item.grn_no !== grnNo
+                        })
+                        setData(newData)
+                        setTempData(newData.map(item => {
+                            return {
+                                ...item,
+                                temp:true
+                            }
+                        }))
                         setLoading(false)
-                        console.log(data[props.row.index]['doc_no'])
+                        // console.log(data[props.row.index]['doc_no'])
                     })
                     .catch(e => {
                         setLoading(false);
@@ -114,7 +124,8 @@ function GRE(props) {
             Header:'Details Count',
             accessor:'tot_linctr'
         }
-    ],[data, tempData])
+
+    ],[data, id, setLoading, tempData])
 
     const updateCell = (rowIndex, columnId, value) => {
         setPageReset(true)
@@ -172,7 +183,7 @@ function GRE(props) {
             <Loaders isLoading={isLoading}/>
             <Paper elevation={0} component={Box} p={1}>
                 <Grid container spacing={2}>
-                    <TableToolbar handleFetch={handleFetch} showDateRange transferType='Type'/>
+                    <TableToolbar handleFetch={handleFetch} showDateRange/>
                     <Table 
                         columns={columns}
                         data={data}
