@@ -86,7 +86,8 @@ export default function IRVRFD() {
                     exportToASN({
                         route:'trnho',
                         refNo:props.row.original.trnho_no,
-                        type:props.row.original.trnho_type
+                        type:props.row.original.trnho_type,
+                        fileName:props.row.original.trnho_no
                     })
                     .then(() => {
                         setLoading(false)

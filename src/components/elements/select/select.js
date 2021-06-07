@@ -96,11 +96,11 @@ function SelectTypes({type}) {
 
 
 SelectTypes.defaultProps = {
-    type:'PO'
+    type:''
 }   
 
 SelectTypes.propTypes ={
-    type: PropTypes.oneOf(['PO','Type','SA','DOC'])
+    type: PropTypes.oneOf(['','PO','Type','SA','DOC'])
 }
 
 export default SelectTypes

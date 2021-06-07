@@ -208,7 +208,7 @@ TableToolbar.defaultProps = {
   isExportVisible:false,
   showDateFilter:false,
   showDateRange:false,
-  transferType:'PO',
+  transferType:'',
   search:'',
   date:'',
   showSTC:false,
@@ -216,5 +216,5 @@ TableToolbar.defaultProps = {
 }
 
 TableToolbar.propTypes ={
-  transferType: PropTypes.oneOf(['PO','Type','SA','DOC'])
+  transferType: PropTypes.oneOf(['','PO','Type','SA','DOC'])
 }

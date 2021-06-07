@@ -2,7 +2,7 @@ import React from 'react';
 import {Paper,Grid, Button,Box} from '@material-ui/core';
 import {useSelector} from 'react-redux';
 import {Table,TableToolbar,Loader} from '../../elements';
-import {retrieve,retriveDetails,exportToASN,exportToExcel} from '../saga';
+import {retrieve,retriveDetails,exportToASN,exportToExcel,report} from '../saga';
 import ViewItems from '../viewItems';
 
 
@@ -148,12 +148,29 @@ export default function PurchaseOrder() {
         })
     }   
 
+    const handlePrint = () => {
+        setLoading(true);
+        report({
+            route:'report',
+            report:'openpo'
+        })
+        .then(() => {
+            setLoading(false)
+        })
+        .catch(e => {
+            setLoading(false)
+        })
+    }
+
     return (
         <div>
             {isLoading ? <Loader/>: null}
             <Paper elevation={0} component={Box} p={1}>
                 <Grid container spacing={2}>
                     <TableToolbar transferType='PO' handleFetch={handleFetch} handleExport={handleExport} showDateRange isExportVisible/>
+                    <Box p={1}>
+                        <Button variant='contained' onClick={handlePrint}>PO Balance Sheet</Button>
+                    </Box>
                     <Table 
                         columns={columns}
                         data={data}
