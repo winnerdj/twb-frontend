@@ -50,3 +50,29 @@ export const create = ({
         throw e
     }
 }
+
+export const retrieveMidbound = ({
+    route,
+    from,
+    to,
+    type
+}) => {
+    try{
+        const apiService = API({
+            responseType:'json',
+            contentType:'application/json'
+        })
+
+        return apiService.get(`/midbound/${route}`,{
+            params:{
+               from,
+               to,
+               type
+            }
+        })
+    }
+    catch(e){
+        console.log(e)
+        throw e
+    }
+}

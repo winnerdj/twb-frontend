@@ -3,11 +3,11 @@ import {Paper,Grid,Box} from '@material-ui/core';
 import {useSelector} from 'react-redux';
 import {Table,TableToolbar,Loader} from '../../elements';
 import {retrieve,exportToExcel} from '../saga';
-import {toast} from 'react-toastify';
+// import {toast} from 'react-toastify';
 // import ViewItems from '../viewItems';
 
 function DR() {
-    const {select,fromDate,toDate,date,stc} = useSelector(state => state.filters)
+    const {select,fromDate,toDate} = useSelector(state => state.filters)
     const [data,setData] = React.useState([]);
     const [isLoading,setLoading] = React.useState(false);
     // const [open,setOpen] = React.useState(false);
