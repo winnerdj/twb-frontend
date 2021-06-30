@@ -102,7 +102,7 @@ export const exportToExcel = ({
             responseType:'blob',
             contentType:'application/vnd.ms-excel'
         })
-        .post(`/${baseURL}/${route}/excel`,{
+        .post(`/${baseURL}/${route}/excel`,null,{
             params:{
                 fromDate,
                 toDate

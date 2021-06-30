@@ -122,6 +122,7 @@ export default function Outbound() {
         loader(true);
         exportToODO({
             route:'sa',
+            type:select,
             refNo:'',
             via: via === null ? '': via.value,
             stc:stc == null ? '' : stc.value,
