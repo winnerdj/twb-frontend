@@ -7,6 +7,7 @@ import ViewItems from '../viewItems';
 
 export default function IRVRFD() {
     const {select,fromDate,toDate} = useSelector(state => state.filters)
+    const {id} = useSelector(state => state.user)
     const [data,setData] = React.useState([]);
     const [isLoading,setLoading] = React.useState(false);
     const [open,setOpen] = React.useState(false);
@@ -87,7 +88,8 @@ export default function IRVRFD() {
                         route:'trnho',
                         refNo:props.row.original.trnho_no,
                         type:props.row.original.trnho_type,
-                        fileName:props.row.original.trnho_no
+                        fileName:props.row.original.trnho_no,
+                        userId:id
                     })
                     .then(() => {
                         setLoading(false)
@@ -160,3 +162,5 @@ export default function IRVRFD() {
         </div>
     )
 }
+
+

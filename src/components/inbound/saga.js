@@ -64,7 +64,8 @@ export const exportToASN = ({
     route,
     type,
     refNo,
-    fileName
+    fileName,
+    userId
 }) => {
     try{
         return API({
@@ -73,7 +74,8 @@ export const exportToASN = ({
         })
         .get(`/${baseURL}/${route}/asn/${refNo}`,{
             params:{
-                type
+                type,
+                userId
             }
         })
         .then(result => {
@@ -89,7 +91,8 @@ export const exportToASN = ({
 export const exportToExcel = ({
     route,
     fromDate,
-    toDate
+    toDate,
+    userId
 }) => {
     try{
         return API({
