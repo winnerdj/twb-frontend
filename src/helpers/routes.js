@@ -7,7 +7,7 @@ import ForwardShipment from '../components/dataManagement/forwardShipment/main';
 import ItemCoversion from '../components/dataManagement/itemConversion';
 import {UserManagement} from '../components/administration';
 import {PO,IRVRFD,GR} from '../components/inbound';
-import {Outbound,ShipmentConf,DR} from '../components/outbound';
+import {Outbound,ShipmentConf,DR,ErronousODO} from '../components/outbound';
 import {Inventory,Loctran} from '../components/internal';
 import Triggers from '../components/triggers';
 
@@ -68,6 +68,10 @@ const routes = [
     {
         route:'/dr',
         component:index => <DR key={index}/>
+    },
+    {
+        route:'/erronous-odo',
+        component:index => <ErronousODO key={index}/>
     },
     {
         route:'/inventory',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar,makeStyles, Box, Button,IconButton,Toolbar, Menu, MenuItem } from '@material-ui/core';
+import {AppBar,makeStyles, Box, Button,IconButton,Toolbar, Menu, MenuItem } from '@material-ui/core';
 import {Menu as MenuIcon} from '@material-ui/icons';
 import {useSelector,useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
@@ -87,7 +87,6 @@ export default function Header() {
     )
 
 
-
     return (
         <div className={classes.root}>
             <AppBar position="fixed" color='primary'>
@@ -104,7 +103,6 @@ export default function Header() {
                         </Button>
                       </Box>
                   </div>
-                 
                 </Toolbar>
         </AppBar>
         {renderMenu}

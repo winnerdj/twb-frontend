@@ -11,7 +11,7 @@ import {Button,
 import {updateUser} from '../saga';
 import {toast} from 'react-toastify';
 
-export default function UpdateUser({
+export default function     UpdateUser({
     open,
     toggle,
     viewResetPassword,

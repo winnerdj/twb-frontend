@@ -9,7 +9,6 @@ import Content from '../content';
 import SignIn from '../signIn';
 import {modules} from '../../../helpers';
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -26,8 +25,7 @@ export default function Body() {
     const classes = useStyles();
     let location = useLocation();
     let history = useHistory();
-
-
+    
     React.useEffect(()=>{
         console.log(process.env.NODE_ENV)
         if(location.pathname !== '/' && typeof location.state === 'undefined'){

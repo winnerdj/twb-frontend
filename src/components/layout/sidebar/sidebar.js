@@ -67,7 +67,7 @@ export default function Sidebar({isOpen,toggle}) {
                                                 disableTypography
                                                 primary={<Typography type="body2" color='primary'>{item.label}</Typography>}
                                             />
-                                            <div className={classes.iconColor}>
+                                            <div>
                                                 {item.isCollapse ? <ExpandLess/> :<ExpandMore/>}
                                             </div>
                                         </ListItem> : 

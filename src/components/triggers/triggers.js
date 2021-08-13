@@ -32,6 +32,9 @@ const Triggers = () => {
             <Paper elevation={0} component={Box} p={1}>
                 <DateFilter trigger={handleTrigger} type='loctran' label='Location Transfer Manual Trigger'/>
             </Paper>
+            <Paper elevation={0} component={Box} p={1}>
+                <DateFilter trigger={handleTrigger} type='erronous-odo' label='Erronous ODO Manual Trigger'/>
+            </Paper>
         </div>
     );
 };

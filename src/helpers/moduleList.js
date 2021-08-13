@@ -42,6 +42,11 @@ const moduleLists = [
                 name:'dr',
                 label: 'Delivery Receipt',
                 link:'/dr'
+            },
+            {
+                name:'erronousODO',
+                label:'Erronous ODO',
+                link:'/erronous-odo'
             }
         ]
     },

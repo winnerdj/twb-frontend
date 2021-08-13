@@ -17,41 +17,26 @@ import {
     useTable,
     useSortBy,
     useResizeColumns,
-    useBlockLayout,
     usePagination,
     useGlobalFilter,
-    useAsyncDebounce
+    useAsyncDebounce,
+    useFlexLayout
 } from 'react-table';
-// import {useSelector} from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
     resizer:{
         display:'inline-block',
         background: theme.palette.divider,
-        width: '3px',
-        height: '80%',
+        width: '10px',
+        height: '100%',
         position: 'absolute',
         right: 0,
         top: 0,
         transform: 'translateX(50%)'
     },
-    root:{
-        width: '100%',
-        paddingLeft:'10px',
-        paddingRight:'10px'
-    },
-    container:{
-        maxHeight:400,
-        width:'100%'
-    },
-    header:{
-        position:'sticky',
-        top: 0,
-        zIndex:10
-    },
     textContainer: {
         display: 'block',
-        width: 'inherit',
+        maxWidth: 'inherit',
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis'
@@ -95,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
             width: '20ch',
           },
         },
-      }
+    }
 }))
 
 const EditableCell = ({
@@ -148,7 +133,7 @@ export default function MaTable({
     const [search,setSearch] = React.useState('');
  
     const defaultColumn = {
-        minWidth: 30,
+        minWidth: 50,
         width: 150,
         maxWidth: 400,
         Cell:EditableCell
@@ -180,7 +165,7 @@ export default function MaTable({
         useGlobalFilter,
         useSortBy,
         useResizeColumns,
-        useBlockLayout,
+        useFlexLayout,
         usePagination,
     )
 
@@ -236,9 +221,8 @@ export default function MaTable({
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                    <div className={classes.root}>
-                        <TableContainer className={classes.container}>
-                        <Table {...getTableProps()} size='small' stickyHeader style={{transformStyle: 'preserve-3d'}}>
+                        <TableContainer>
+                        <Table {...getTableProps()} size='small' stickyHeader style={{transformStyle:'preserve-3d'}}>
                             <TableHead >
                                 {headerGroups.map(headerGroup => (
                                     <TableRow className={classes.header} {...headerGroup.getHeaderGroupProps()}>
@@ -289,9 +273,12 @@ export default function MaTable({
                     component='div'
                     style={{ display:"flex" }}
                     rowsPerPageOptions={[
+                        {label:5, value: 5},
+                        {label:10, value: 10},
                         {label:20, value: 20},
+                        {label:25, value: 25},
                         {label:50, value: 50},
-                        {label:100, value: 100}
+                        {label:100, value: 100},
                     ]}
                     colSpan={3}
                     count={data.length}
@@ -303,7 +290,6 @@ export default function MaTable({
                     }}
                     onChangePage={handleChangePage}
                     onChangeRowsPerPage={handleChangeRowsPerPage}/>
-                    </div>
                 </Grid>
             </Grid>  
     )
