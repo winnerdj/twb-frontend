@@ -27,7 +27,12 @@ function GRN() {
         {
             Header:'GRN Status',
             Cell:props => {
-                return <div>{props.row.original.grn_status === '  C' ? 'Cancelled' : null}</div>
+                return <div>{
+                    props.row.original.grn_status === null ? null :
+                    props.row.original.grn_status.toUpperCase().includes('C') ? 'Cancelled' :
+                    props.row.original.grn_status.toUpperCase().includes('R') ? 'Reversed' :
+                    props.row.original.grn_status.toUpperCase().includes('X') ? 'Invalid' : props.row.original.grn_status
+                }</div>
             }
         },
         {
