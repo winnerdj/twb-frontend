@@ -7,7 +7,8 @@ import {
 } from '@material-ui/core';
 import {useSelector} from 'react-redux';
 import {Table,TableToolbar,useLoading,Loaders} from '../../elements';
-import {retrieveMidbound} from '../saga';
+import {retrieveMidbound,exportToExcel} from '../saga';
+import {toast} from 'react-toastify';
 
 function Loctran(props) {
     const {fromDate,toDate} = useSelector(state => state.filters)
@@ -62,12 +63,30 @@ function Loctran(props) {
         })
     }
 
+    const handleExport = () => {
+        setLoading(true)
+        exportToExcel({
+            route:'loctran',
+            fromDate,
+            toDate
+        })
+        .then(result => {
+            setLoading(false)
+        })
+        .catch(e => {
+            if(e.response && e.response.data){
+                toast.error(`${e.response.data.message}`)
+            }
+            setLoading(false)
+        })
+    }
+
     return (
         <div>
             <Loaders isLoading={isLoading}/>
             <Paper elevation={0} component={Box} p={1}>
                 <Grid container spacing={2}>
-                    <TableToolbar handleFetch={handleFetch} showDateRange/>
+                    <TableToolbar handleFetch={handleFetch} handleExport={handleExport}  showDateRange isExportVisible/>
                     <Table 
                         columns={columns}
                         data={data}

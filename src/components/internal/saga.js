@@ -1,5 +1,5 @@
 import {API} from '../../helpers';
-// import {saveAs} from 'file-saver';
+import {saveAs} from 'file-saver';
 const baseURL = 'internal';
 
 export const retrieve = ({
@@ -75,4 +75,33 @@ export const retrieveMidbound = ({
         console.log(e)
         throw e
     }
+}
+
+export const exportToExcel = ({
+    route,
+    fromDate,
+    toDate,
+    userId
+}) => {
+    try{
+        return API({
+            responseType:'blob',
+            contentType:'application/vnd.ms-excel'
+        })
+        .post(`/midbound/${route}/excel`,null,{
+            params:{
+                fromDate,
+                toDate
+            }
+        })
+        .then(result => {
+            return saveAs(result.data,`${route}.xlsx`)
+        })
+    
+    }
+    catch(e){
+        console.log(e)
+        throw e
+    }
+    
 }
