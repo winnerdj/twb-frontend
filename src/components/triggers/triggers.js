@@ -18,19 +18,19 @@ const Triggers = () => {
     return (
         <div>
             <Paper elevation={0} component={Box} p={1}>
-                <DateFilter trigger={handleTrigger} type='gr' label='GRN Confirmation Manual Trigger'/>
+                <DateFilter trigger={handleTrigger} type='gr' label='GRN Confirmation (GR execution end datetime)'/>
             </Paper>
             <Paper elevation={0} component={Box} p={1}>
-                <DateFilter trigger={handleTrigger} type='sa' label='Shipment Confirmation Manual Trigger'/>
+                <DateFilter trigger={handleTrigger} type='isConsolidated' label='SA Status Update (ODO modified datetime)'/>
             </Paper>
             <Paper elevation={0} component={Box} p={1}>
-                <DateFilter trigger={handleTrigger} type='isConsolidated' label='SA Status Update Manual Trigger'/>
+                <DateFilter trigger={handleTrigger} type='sa' label='Shipment Confirmation (Load Execution creation datetime)'/>
             </Paper>
             <Paper elevation={0} component={Box} p={1}>
-                <DateFilter trigger={handleTrigger} type='dr' label='DR Manual Trigger'/>
+                <DateFilter trigger={handleTrigger} type='dr' label='DR Confirmation (Load Execution creation datetime)'/>
             </Paper>
             <Paper elevation={0} component={Box} p={1}>
-                <DateFilter trigger={handleTrigger} type='loctran' label='Location Transfer Manual Trigger'/>
+                <DateFilter trigger={handleTrigger} type='loctran' label='Location Transfer Confirmation (Stock Convert modified datetime)'/>
             </Paper>
         </div>
     );
