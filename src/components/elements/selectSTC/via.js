@@ -38,5 +38,13 @@ export const viaList = [
     {
         id:"SEA",
         description:"SEA"
+    },
+    {
+        id:"AIR_LI",
+        description:"AIR_LI"
+    },
+    {
+        id:"LAND_LI",
+        description:"LAND_LI"
     }
 ]
