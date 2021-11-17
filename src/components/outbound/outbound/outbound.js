@@ -8,7 +8,7 @@ import ViewItems from '../viewItems';
 import ExportModal from './exportModal';
 
 export default function Outbound() {
-    const {select,fromDate,toDate,stc,region,via} = useSelector(state => state.filters)
+    const {select,fromDate,toDate,stc,region,via,selectWhse} = useSelector(state => state.filters)
     const [data,setData] = React.useState([]);
     const [isLoading,setLoading] = useLoading(false);
     const [open,setOpen] = React.useState(false);
@@ -105,7 +105,8 @@ export default function Outbound() {
             route:'sa',
             type:select,
             fromDate,
-            toDate
+            toDate,
+            whse:selectWhse?.value
         })
         .then(result => {
             if(result.status === 200){

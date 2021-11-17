@@ -3,7 +3,7 @@ import PropTypes  from 'prop-types';
 import {makeStyles,Box,Grid,Button,TextField} from '@material-ui/core';
 import {GetApp} from '@material-ui/icons';
 import {useSelector,useDispatch} from 'react-redux';
-import {SelectType,SelectSTC} from '../../elements';
+import {SelectType,SelectSTC,SelectWhse} from '../../elements';
 // import SelectType from '../select';
 
 const useStyles = makeStyles((theme) => ({
@@ -99,6 +99,13 @@ export default function TableToolbar({
     return (
         <Grid container className={classes.root}>
             <Grid item container xs={12}>
+                {
+                  <Grid item xs={2}>
+
+                      <SelectWhse/>
+                   
+                  </Grid>
+                }
                 {
                   showDateRange ?
                   <Grid component={Box} display='flex' item>

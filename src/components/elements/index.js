@@ -4,5 +4,6 @@ export {default as Loader} from './loader';
 export {default as SelectType} from './select';
 export {default as Search} from './search'; 
 export {default as SelectSTC} from './selectSTC';
+export {default as SelectWhse} from './selectWhse';
 export * as elemetReducers from './reducer'; 
 export {useLoading,Loader as Loaders} from './loader-component';

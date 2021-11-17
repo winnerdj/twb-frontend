@@ -9,7 +9,8 @@ export const retrieve = ({
     type,
     refNo,
     fromDate,
-    toDate
+    toDate,
+    whse
 }) => {
     try{
         return API({
@@ -20,7 +21,8 @@ export const retrieve = ({
                 type,
                 refNo,
                 fromDate,
-                toDate
+                toDate,
+                whse
             }
         })
         .then(result => {
@@ -65,7 +67,7 @@ export const exportToODO = ({
     refNo,
     stc,
     via,
-    region  
+    region
 }) => {
     try{
         return API({

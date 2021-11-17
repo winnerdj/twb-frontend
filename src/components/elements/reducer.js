@@ -6,6 +6,7 @@ export const filterReducer = (
         fromDate:'',
         toDate:'',
         select:'',
+        selectWhse:null,
         region:null,
         stc:null,
         via:null
@@ -25,6 +26,7 @@ export const filterReducer = (
                 fromDate:'',
                 toDate:'',
                 select:'',
+                selectWhse:null,
                 region:null,
                 stc:null,
                 via:null
