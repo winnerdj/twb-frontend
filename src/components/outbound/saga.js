@@ -1,6 +1,7 @@
 import API from '../../helpers/api';
 import {saveAs} from 'file-saver';
 import moment from 'moment';
+const date = moment();
 
 const baseURL = 'outbound';
 
@@ -67,7 +68,8 @@ export const exportToODO = ({
     refNo,
     stc,
     via,
-    region
+    region,
+    whse
 }) => {
     try{
         return API({
@@ -80,7 +82,8 @@ export const exportToODO = ({
                 refNo,
                 stc,
                 via,
-                region
+                region,
+                whse
             }
         })
         .then(result => {
@@ -97,7 +100,8 @@ export const exportToODO = ({
 export const exportToExcel = ({
     route,
     fromDate,
-    toDate
+    toDate,
+    whse
 }) => {
     try{
         return API({
@@ -107,7 +111,8 @@ export const exportToExcel = ({
         .post(`/${baseURL}/${route}/excel`,null,{
             params:{
                 fromDate,
-                toDate
+                toDate,
+                whse
             }
         })
         .then(result => {
@@ -120,4 +125,27 @@ export const exportToExcel = ({
         throw e
     }
 
+}
+
+
+export const exportToAsnSTO = ({
+    route,
+    type,
+    refNo,
+    fileName
+}) => {
+    try{
+        return API({
+            responseType:'blob',
+            contentType:'application/vnd.ms-excel'
+        })
+        .get(`/inbound/${route}/asn/${refNo}`)
+        .then(result => {
+            return saveAs(result.data,`ASN_${fileName}_${date.format('YYYYMMDD').toString()}.xlsx`)
+        })
+    }
+    catch(e){
+        console.log(e)
+        throw e
+    }
 }

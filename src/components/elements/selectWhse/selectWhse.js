@@ -10,19 +10,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function SelectWhse() {
-    const [state,setState] = React.useState([]);
-    const {whse} = useSelector(state => state.filters)
+    const {selectWhse} = useSelector(state => state.filters)
     const dispatch = useDispatch();
     const classes = useStyles();
     
     React.useEffect(()=>{
-        setState([
-            '',
-            'ARE-TWB',
-            'HER-TWB',
-            'POS-TWB',
-            'ZEU-TWB'
-        ])
         return () => {
             dispatch({
                 type:'SET_FILTER_FIELD',
@@ -44,19 +36,19 @@ function SelectWhse() {
     const options = [
         {
             label:'ARE-TWB',
-            value:'ARE-TWB'
+            value:'CDO'
         },
         {
             label:'HER-TWB',
-            value:'HER-TWB'
+            value:'DVO'
         },
         {
             label:'POS-TWB',
-            value:'POS-TWB'
+            value:'CEB'
         },
         {
             label:'ZEU-TWB',
-            value:'ZEU-TWB'
+            value:'MNL'
         },
     ]
 
@@ -65,8 +57,9 @@ function SelectWhse() {
             <Select
                 isClearable
                 placeholder='Warehouse Code'
+                name='selectWhse'
                 options={options}
-                value={whse}
+                value={selectWhse}
                 onChange={handleChange}
             />
         </div>

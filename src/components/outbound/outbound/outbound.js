@@ -2,7 +2,7 @@ import React from 'react';
 import {Paper,Grid, Button,Box} from '@material-ui/core';
 import {useSelector} from 'react-redux';
 import {Table,TableToolbar,Loaders,useLoading} from '../../elements';
-import {retrieve,retriveDetails,exportToODO} from '../saga';
+import {retrieve,retriveDetails,exportToODO,exportToExcel} from '../saga';
 import {toast} from 'react-toastify';
 import ViewItems from '../viewItems';
 import ExportModal from './exportModal';
@@ -119,7 +119,7 @@ export default function Outbound() {
         })
     }
 
-    const handleExport = (loader) => {
+    const handleExportODO = (loader) => {
         loader(true);
         exportToODO({
             route:'sa',
@@ -127,7 +127,8 @@ export default function Outbound() {
             refNo:'',
             via: via === null ? '': via.value,
             stc:stc == null ? '' : stc.value,
-            region:region == null ? '' : region.value
+            region:region == null ? '' : region.value,
+            whse:selectWhse?.value
         })
         .then(result => {
             loader(false)   
@@ -156,6 +157,22 @@ export default function Outbound() {
 
     }
 
+    const handleExport = () => {
+        setLoading(true);
+        exportToExcel({
+            route:'sa',
+            fromDate,
+            toDate,
+            whse:selectWhse?.value
+        })
+        .then(() => {
+            setLoading(false)
+        })
+        .catch(e => {
+            setLoading(false)
+        })
+    }   
+
     const toggle = () => {
         setModal(!modal)
     }
@@ -167,12 +184,14 @@ export default function Outbound() {
             <Grid container spacing={2}>
                 <TableToolbar 
                     handleFetch={handleFetch} 
-                    handleExport={toggle} 
+                    handleExport={handleExport} 
                     showDateRange 
-                    showSTC 
                     transferType='SA' 
                     isExportVisible
                     />
+                    <Box p={1}>
+                        <Button variant='contained' onClick={toggle}>Export Outbound Order</Button>
+                    </Box>
                 <Table 
                     columns={columns}
                     data={data}
@@ -181,7 +200,7 @@ export default function Outbound() {
             </Grid>
         </Paper>
         <ViewItems open={open} toggle={toggleDetails} {...selected}/>
-        <ExportModal isOpen={modal} toggle={toggle} handleExport={handleExport}/>
+        <ExportModal isOpen={modal} toggle={toggle} handleExport={handleExportODO}/>
     </div>
     )
 }

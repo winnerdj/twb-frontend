@@ -49,7 +49,7 @@ function ExportModal({
                         />
                     </Grid>
                     <Grid item xs={2}>
-                        <Button variant='contained' color='primary' onClick={() => handleExport(setLoading)}>Export</Button>
+                        <Button variant='contained' color='primary' onClick={() => handleExport(setLoading)}>Export ODO</Button>
                     </Grid>
                 </Grid>
             </DialogContent>

@@ -36,6 +36,7 @@ function SelectTypes({type}) {
         }
         else if(type === 'SA'){
             setState([
+                'STO',
                 'MFGSA',
                 'PWS',
                 'SA',

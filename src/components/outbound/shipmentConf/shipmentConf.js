@@ -2,17 +2,19 @@ import React from 'react';
 import {
     Paper,
     Grid, 
-    Box} from '@material-ui/core';
+    Box,
+    Button} from '@material-ui/core';
 import {useSelector} from 'react-redux';
 import {Table,TableToolbar,useLoading,Loaders} from '../../elements';
 import {
     retrieve,
-    exportToExcel
+    exportToExcel,
+    exportToAsnSTO
 } from '../saga';
 import {toast} from 'react-toastify';
 
 function ConfirmedShipment() {
-    const {select,fromDate,toDate} = useSelector(state => state.filters)
+    const {select,fromDate,toDate,selectWhse} = useSelector(state => state.filters)
     const [data,setData] = React.useState([]);
     const [isLoading,setLoading] = useLoading();
     // const [open,setOpen] = React.useState(false);
@@ -94,6 +96,32 @@ function ConfirmedShipment() {
             Header:'Modified Date',
             accessor:'updated_date'
         }
+        ,{
+            Header:'Action',
+            
+            Cell:props => { 
+                const handlePrint = () => {
+                    setLoading(true);
+                    exportToAsnSTO({
+                        route:'stogr',
+                        refNo:props.row.original.ref_no,
+                        type:props.row.original.ship_type,
+                        fileName:props.row.original.ship_no
+                    })
+                    .then(() => {
+                        setLoading(false)
+                    })
+                    .catch(e => {
+                        setLoading(false)
+                    })
+
+                }
+                if(props.row.original.ship_type === 'STO') {
+                    return <Button onClick={handlePrint} size='small' variant='contained'>Convert to ASN</Button>
+                }
+                return <Button disabled={true} />
+            }
+        }
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [])
@@ -108,7 +136,8 @@ function ConfirmedShipment() {
             route:'shpcnf',
             type:select,
             fromDate,
-            toDate
+            toDate,
+            whse:selectWhse?.value
         })
         .then(result => {
             if(result.status === 200){
@@ -127,7 +156,8 @@ function ConfirmedShipment() {
         exportToExcel({
             route:'shpcnf',
             fromDate,
-            toDate
+            toDate,
+            whse:selectWhse?.value
         })
         .then(result => {
             setLoading(false)
