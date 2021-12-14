@@ -174,7 +174,7 @@ function ConfirmedShipment() {
             <Loaders isLoading={isLoading}/>
             <Paper elevation={0} component={Box} p={1}>
                 <Grid container spacing={2}>
-                    <TableToolbar handleFetch={handleFetch} handleExport={handleExport} showDateRange transferType='SA' isExportVisible/>
+                    <TableToolbar handleFetch={handleFetch} handleExport={handleExport} showDateRange showWhse transferType='SA' isExportVisible/>
                     <Table 
                         columns={columns}
                         data={data}

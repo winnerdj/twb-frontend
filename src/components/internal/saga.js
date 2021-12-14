@@ -53,8 +53,8 @@ export const create = ({
 
 export const retrieveMidbound = ({
     route,
-    from,
-    to,
+    fromDate,
+    toDate,
     type
 }) => {
     try{
@@ -65,9 +65,9 @@ export const retrieveMidbound = ({
 
         return apiService.get(`/midbound/${route}`,{
             params:{
-               from,
-               to,
-               type
+                fromDate,
+                toDate,
+                type
             }
         })
     }

@@ -186,6 +186,7 @@ export default function Outbound() {
                     handleFetch={handleFetch} 
                     handleExport={handleExport} 
                     showDateRange 
+                    showWhse
                     transferType='SA' 
                     isExportVisible
                     />

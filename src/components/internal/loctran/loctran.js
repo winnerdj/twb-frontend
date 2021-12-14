@@ -2,8 +2,7 @@ import React from 'react';
 import {
     Paper,
     Grid, 
-    Box,
-    Button
+    Box
 } from '@material-ui/core';
 import {useSelector} from 'react-redux';
 import {Table,TableToolbar,useLoading,Loaders} from '../../elements';
@@ -51,8 +50,8 @@ function Loctran(props) {
         setLoading(true);
         retrieveMidbound({
             route:'loctran',
-            from:fromDate,
-            to:toDate
+            fromDate: fromDate,
+            toDate: toDate
         })
         .then(result => {
             setData(result.data)

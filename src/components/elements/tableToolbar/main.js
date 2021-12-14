@@ -71,7 +71,8 @@ export default function TableToolbar({
   transferType,
   showDateRange,
   showCreate,
-  showSTC
+  showSTC,
+  showWhse
 }) {
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -99,12 +100,10 @@ export default function TableToolbar({
     return (
         <Grid container className={classes.root}>
             <Grid item container xs={12}>
-                {
+                { showWhse ?
                   <Grid item xs={2}>
-
                       <SelectWhse/>
-                   
-                  </Grid>
+                  </Grid> : null
                 }
                 {
                   showDateRange ?
@@ -219,7 +218,8 @@ TableToolbar.defaultProps = {
   search:'',
   date:'',
   showSTC:false,
-  showCreate:false
+  showCreate:false,
+  showWhse:false
 }
 
 TableToolbar.propTypes ={

@@ -122,7 +122,7 @@ function DR() {
             {isLoading ? <Loader/>: null}
         <Paper elevation={0} component={Box} p={1}>
             <Grid container spacing={2}>
-                <TableToolbar handleFetch={handleFetch} handleExport={handleExport} showDateRange isExportVisible transferType='SA'/>
+                <TableToolbar handleFetch={handleFetch} handleExport={handleExport} showDateRange isExportVisible showWhse transferType='SA'/>
                 <Table 
                     columns={columns}
                     data={data}
