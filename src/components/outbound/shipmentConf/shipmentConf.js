@@ -104,6 +104,7 @@ function ConfirmedShipment() {
                     setLoading(true);
                     exportToAsnSTO({
                         route:'stogr',
+                        shipNo:props.row.original.ship_no,
                         refNo:props.row.original.ref_no,
                         type:props.row.original.ship_type,
                         fileName:props.row.original.ship_no
@@ -119,7 +120,7 @@ function ConfirmedShipment() {
                 if(props.row.original.ship_type === 'STO') {
                     return <Button onClick={handlePrint} size='small' variant='contained'>Convert to ASN</Button>
                 }
-                return <Button disabled={true} />
+                return <Button disabled size='small' variant='contained' >Convert to ASN</Button>
             }
         }
     ],

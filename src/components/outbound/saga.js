@@ -132,14 +132,19 @@ export const exportToAsnSTO = ({
     route,
     type,
     refNo,
-    fileName
+    fileName,
+    shipNo
 }) => {
     try{
         return API({
             responseType:'blob',
             contentType:'application/vnd.ms-excel'
         })
-        .get(`/inbound/${route}/asn/${refNo}`)
+        .get(`/inbound/${route}/asn/${refNo}`, {
+            params : {
+                shipNo
+            }
+        })
         .then(result => {
             return saveAs(result.data,`ASN_${fileName}_${date.format('YYYYMMDD').toString()}.xlsx`)
         })
