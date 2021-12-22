@@ -73,6 +73,10 @@ function ConfirmedShipment() {
             accessor:'issuing_loc'
         },
         {
+            Header:'Destination',
+            accessor:'destination'
+        },
+        {
             Header:'Vendor Code',
             accessor:'vendor_code'
         },
