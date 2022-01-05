@@ -154,3 +154,29 @@ export const exportToAsnSTO = ({
         throw e
     }
 }
+
+export const exportSTOBalanceSheet = ({
+    route,
+    fromDate,
+    toDate
+}) => {
+    try{
+        return API({
+            responseType:'blob',
+            contentType:'application/vnd.ms-excel'
+        })
+        .get(`/outbound/${route}/opensto`, {
+            params : {
+                fromDate,
+                toDate
+            }
+        })
+        .then(result => {
+            return saveAs(result.data,`OpenSTO_${date.format('YYYYMMDD').toString()}.xlsx`)
+        })
+    }
+    catch(e){
+        console.log(e)
+        throw e
+    }
+}

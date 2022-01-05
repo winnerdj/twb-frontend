@@ -2,7 +2,7 @@ import React from 'react';
 import {Paper,Grid, Button,Box} from '@material-ui/core';
 import {useSelector} from 'react-redux';
 import {Table,TableToolbar,Loaders,useLoading} from '../../elements';
-import {retrieve,retriveDetails,exportToODO,exportToExcel} from '../saga';
+import {retrieve,retriveDetails,exportToODO,exportToExcel,exportSTOBalanceSheet} from '../saga';
 import {toast} from 'react-toastify';
 import ViewItems from '../viewItems';
 import ExportModal from './exportModal';
@@ -119,6 +119,21 @@ export default function Outbound() {
         })
     }
 
+    const handleSTOBalanceSheet = () => {
+        setLoading(true)
+        exportSTOBalanceSheet({
+            route:'report',
+            fromDate,
+            toDate
+        })
+        .then(result => {
+            setLoading(false)
+        })
+        .catch(e => {
+            setLoading(false)
+        })
+    }
+
     const handleExportODO = (loader) => {
         loader(true);
         exportToODO({
@@ -192,6 +207,9 @@ export default function Outbound() {
                     />
                     <Box p={1}>
                         <Button variant='contained' onClick={toggle}>Export Outbound Order</Button>
+                    </Box>
+                    <Box p={1}>
+                        <Button variant='contained' onClick={handleSTOBalanceSheet}>STO Balance Sheet</Button>
                     </Box>
                 <Table 
                     columns={columns}

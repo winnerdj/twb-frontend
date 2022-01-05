@@ -104,7 +104,7 @@ function ConfirmedShipment() {
             Header:'Action',
             
             Cell:props => { 
-                const handlePrint = () => {
+                const handleSTOASN = () => {
                     setLoading(true);
                     exportToAsnSTO({
                         route:'stogr',
@@ -122,7 +122,7 @@ function ConfirmedShipment() {
 
                 }
                 if(props.row.original.ship_type === 'STO') {
-                    return <Button onClick={handlePrint} size='small' variant='contained'>Convert to ASN</Button>
+                    return <Button onClick={handleSTOASN} size='small' variant='contained'>Convert to ASN</Button>
                 }
                 return <Button disabled size='small' variant='contained' >Convert to ASN</Button>
             }
