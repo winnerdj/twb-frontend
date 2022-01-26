@@ -8,7 +8,7 @@ import ItemCoversion from '../components/dataManagement/itemConversion';
 import {UserManagement} from '../components/administration';
 import {PO,IRVRFD,GR} from '../components/inbound';
 import {Outbound,ShipmentConf,DR} from '../components/outbound';
-import {Inventory,Loctran} from '../components/internal';
+import {Inventory,Loctran,TransactionReport} from '../components/internal';
 import Triggers from '../components/triggers';
 
 const routes = [
@@ -72,6 +72,10 @@ const routes = [
     {
         route:'/inventory',
         component:index => <Inventory key={index}/>
+    },
+    {
+        route:'/transactionReport',
+        component:index => <TransactionReport key={index}/>
     },
     {
         route:'/location-transfer',

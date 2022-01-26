@@ -59,6 +59,11 @@ const moduleLists = [
                 name:'inventory',
                 label:'Inventory',
                 link:'/inventory'
+            },
+            {
+                name:'transactionReport',
+                label:'Transaction Report',
+                link:'/transactionReport'
             }
         ]
     },
