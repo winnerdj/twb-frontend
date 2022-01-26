@@ -76,7 +76,7 @@ function TransactionReport(props) {
             <Loaders isLoading={isLoading}/>
             <Paper elevation={0} component={Box} p={1}>
                 <Grid container spacing={2}>
-                    <TableToolbar handleFetch={handleFetch} showDateRange transferType='DOC'/>
+                    <TableToolbar handleFetch={handleFetch} showDateRange/>
                     <Table 
                         columns={columns}
                         data={data}
