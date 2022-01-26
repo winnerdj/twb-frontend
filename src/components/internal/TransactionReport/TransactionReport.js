@@ -24,11 +24,7 @@ function TransactionReport(props) {
             width:250
         },
         {
-            Header:'Generated Date',
-            accessor:'Date'
-         },
-        {
-            Header:'Zip File',
+            Header:'File Content',
             accessor:'File_Content',
             Cell:props => {
                 const download = () => {
@@ -43,6 +39,14 @@ function TransactionReport(props) {
                 }
                 return <Button variant='contained' color='primary' onClick={download}>Download</Button>
             }
+        },
+        {
+            Header:'Filter Date From',
+            accessor:'filter_fromDate'
+        },
+        {
+            Header:'Filter Date To',
+            accessor:'filter_toDate'
         },
         {
             Header:'Created Date',
