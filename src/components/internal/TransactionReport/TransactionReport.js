@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     Paper,
-    Grid, 
+    Grid,
     Box,
     Button
 } from '@material-ui/core';
@@ -21,7 +21,7 @@ function TransactionReport(props) {
         {
             Header:'Filename',
             accessor:'Filename',
-            width:250
+            width:350
         },
         {
             Header:'File Content',
@@ -42,11 +42,11 @@ function TransactionReport(props) {
         },
         {
             Header:'Filter Date From',
-            accessor:'filter_fromDate'
+            accessor:'Filter_dateFrom'
         },
         {
             Header:'Filter Date To',
-            accessor:'filter_toDate'
+            accessor:'Filter_dateTo'
         },
         {
             Header:'Created Date',
