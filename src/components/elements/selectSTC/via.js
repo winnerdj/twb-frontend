@@ -50,5 +50,9 @@ export const viaList = [
     {
         id:"SEA_LI",
         description:"SEA_LI"
+    },
+    {
+        id:"RORO_2GO",
+        description:"RORO_2GO"
     }
 ]
